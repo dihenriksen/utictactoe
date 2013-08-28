@@ -14,7 +14,7 @@
   <div id='board' data-ng-controller='GameCtrl'>
     <div id='sector0' class='sector'>
       <div class='board-container clearfix'>
-        <div id='space00' data-ng-click='makeMove(0)' class='space bottom'>{{gameboard.spaces[0]}}</div>
+        <div id='space00' data-ng-click='spaceSelect(0)' class='space bottom'>{{gameboard.spaces[0]}}</div>
         <div id='space01' data-ng-click='space01 = "X"' data-ng-init='space01 = ""' class='space bottom central'>{{space01}}</div>
         <div id='space02' data-ng-click='space02 = "X"' data-ng-init='space02 = ""' class='space bottom'>{{space02}}</div>
         <div id='space03' class='space bottom'>{{space03}}</div>
