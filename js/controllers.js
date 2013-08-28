@@ -8,15 +8,15 @@ angular.module('utictactoe.controllers', []).
   	'angularFire',
   	function($scope, angularFire) {
   		var url = 'http://utictactoe.firebaseio.com/gameboard';
-  		var promise = angularFire(url, $scope, 'gameboard', { game: 'XOX' });
+  		var promise = angularFire(url, $scope, 'gameboard', {});
+      $scope.moves = {};
 
   		$scope.myFunc = function() {
   		}
 
   		$scope.makeMove = function() {
-  			console.log('makeMove called');
-  			var space00 = 'X';
-  			return space00;
+        $scope.moves.space00 = 'X';
+        console.log($scope.moves);
   		}
 
   		promise.then(function() {
