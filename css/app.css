@@ -1,0 +1,47 @@
+#gameboard {
+	height: 308px;
+	width: 308px;
+	border: 1px solid black;
+}
+
+.sector {
+	position: relative;
+	float: left;
+	height: 102px;
+	width: 102px;
+	border: 1px solid black;
+}
+
+.space {
+	float: left;
+	height: 30px;
+	width: 30px;
+}
+
+.bottom {
+	border-bottom: 1px solid black;
+}
+
+.central {
+	border-left: 1px solid black;
+	border-right: 1px solid black;
+}
+
+.board-container {
+	height: 92px;
+	width: 92px;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	right: 0;
+	left: 0;
+	margin: auto;
+}
+
+.clearfix:after {
+   content: " "; /* Older browser do not support empty content */
+   visibility: hidden;
+   display: block;
+   height: 0;
+   clear: both;
+}
