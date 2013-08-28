@@ -19,11 +19,11 @@ angular.module('utictactoe.controllers', []).
         } else {
           $scope.gameboard.spaces[i] = 'X';
         };
+        console.log($scope.gameboard.spaces);
       };
 
   		promise.then(function() {
   			$scope.$watch('gameboard', $scope.myFunc);
-        console.log($scope.gameboard);
   		});
   	}
 	]);

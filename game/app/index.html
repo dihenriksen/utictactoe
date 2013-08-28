@@ -14,15 +14,15 @@
   <div id='board' data-ng-controller='GameCtrl'>
     <div id='sector0' class='sector'>
       <div class='board-container clearfix'>
-        <div id='space00' data-ng-click='spaceSelect(0)' class='space bottom'>{{gameboard.spaces[0]}}</div>
-        <div id='space01' data-ng-click='space01 = "X"' data-ng-init='space01 = ""' class='space bottom central'>{{space01}}</div>
-        <div id='space02' data-ng-click='space02 = "X"' data-ng-init='space02 = ""' class='space bottom'>{{space02}}</div>
-        <div id='space03' class='space bottom'>{{space03}}</div>
-        <div id='space04' class='space bottom central'>{{space04}}</div>
-        <div id='space05' class='space bottom'>{{space05}}</div>
-        <div id='space06' class='space'>{{space06}}</div>
-        <div id='space07' class='space central'>{{space07}}</div>
-        <div id='space08' class='space'>{{space08}}</div>
+        <div data-ng-click='spaceSelect(0)' class='space bottom'>{{gameboard.spaces[0]}}</div>
+        <div id='space01' data-ng-click='spaceSelect(1)' class='space bottom central'>{{gameboard.spaces[1]}}</div>
+        <div data-ng-click='spaceSelect(2)' class='space bottom'>{{gameboard.spaces[2]}}</div>
+        <div data-ng-click='spaceSelect(3)' class='space bottom'>{{gameboard.spaces[3]}}</div>
+        <div data-ng-click='spaceSelect(4)' class='space bottom central'>{{gameboard.spaces[4]}}</div>
+        <div data-ng-click='spaceSelect(5)' class='space bottom'>{{gameboard.spaces[5]}}</div>
+        <div data-ng-click='spaceSelect(6)' class='space'>{{gameboard.spaces[6]}}</div>
+        <div data-ng-click='spaceSelect(7)' class='space central'>{{gameboard.spaces[7]}}</div>
+        <div data-ng-click='spaceSelect(8)' class='space'>{{gameboard.spaces[8]}}</div>
       </div>
     </div>
     <div id='sector1' class='sector'>
