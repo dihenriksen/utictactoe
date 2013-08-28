@@ -17,7 +17,8 @@
 	float: left;
 	height: 30px;
 	width: 30px;
-	padding: 6px 0 0 9px;
+	padding-top: 6px;
+	text-align: center;
 }
 
 .bottom {
