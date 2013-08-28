@@ -2,6 +2,7 @@
 	height: 308px;
 	width: 308px;
 	border: 1px solid black;
+	margin: 5px;
 }
 
 .sector {
@@ -16,6 +17,7 @@
 	float: left;
 	height: 30px;
 	width: 30px;
+	padding: 6px 0 0 9px;
 }
 
 .bottom {
