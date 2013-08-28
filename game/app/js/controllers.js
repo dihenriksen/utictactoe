@@ -8,19 +8,24 @@ angular.module('utictactoe.controllers', []).
   	'angularFire',
   	function($scope, angularFire) {
   		var url = 'http://utictactoe.firebaseio.com/gameboard';
-  		var promise = angularFire(url, $scope, 'gameboard', {});
-      $scope.moves = {};
+  		var promise = angularFire(url, $scope, 'gameboard', {'spaces': []});
+      // console.log(gameboard);
+
+
+      // gameboard.spaces = [];
 
   		$scope.myFunc = function() {
   		}
 
-  		$scope.makeMove = function() {
-        $scope.moves.space00 = 'X';
-        console.log($scope.moves);
+  		$scope.makeMove = function(i) {
+        console.log(i);
+        $scope.gameboard.spaces[i] = 'X';
+        console.log($scope.gameboard.spaces[0]);
   		}
 
   		promise.then(function() {
-  			$scope.$watch('gameboard', $scope.myFunc);
+  			$scope.$watch('board', $scope.myFunc);
+        console.log($scope.gameboard);
   		});
   	}
 	]);
