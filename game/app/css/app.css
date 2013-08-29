@@ -5,6 +5,14 @@
 	margin: 5px;
 }
 
+.disabled-true {
+	background-color: red;
+}
+
+.disabled-true div {
+	background-color: red;
+}
+
 .sector {
 	position: relative;
 	float: left;

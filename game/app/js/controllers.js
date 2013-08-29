@@ -24,6 +24,7 @@ angular.module('utictactoe.controllers', []).
           $scope.gameboard.spaces[i] = 'O';
         };
         turn = !turn;
+        $scope.disabled = true;
       };
 
   		promise.then(function() {
