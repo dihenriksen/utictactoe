@@ -8,7 +8,6 @@ angular.module('utictactoe.controllers', []).
   	'angularFire',
   	function($scope, angularFire) {
   		var url = 'http://utictactoe.firebaseio.com/gameboard';
-      var promiseGame
   		var promise = angularFire(url, $scope, 'gameboard', {'spaces': []});
 
   		$scope.myFunc = function() {
@@ -25,14 +24,31 @@ angular.module('utictactoe.controllers', []).
           $scope.gameboard.spaces[i] = 'O';
         };
         turn = !turn;
-        console.log($scope.gameboard.spaces);
       };
 
   		promise.then(function() {
-  			$scope.$watch('gameboard', $scope.myFunc);
+  			$scope.$watch('gameboard');
   		});
   	}
-	]);
+	])
+  .controller('NewGameCtrl', [
+    '$scope',
+    'angularFire',
+    function($scope, angularFire) {
+      var url = 'http://utictactoe.firebaseio.com/gameboard';
+      var promise = angularFire(url, $scope, 'gameboard', {});
+
+      $scope.newgame = function() {
+        for (var space in $scope.gameboard.spaces) {
+          $scope.gameboard.spaces[space] = '';
+        }
+      }
+
+      promise.then(function() {
+        $scope.$watch('gameboard');
+      })
+    }
+  ])
 
 
 
