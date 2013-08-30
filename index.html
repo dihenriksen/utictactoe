@@ -13,7 +13,8 @@
   <div id='board' data-ng-controller='GameCtrl'>
     <div id='sector0' class='sector disabled-{{disabled0}}'>
       <div class='board-container clearfix'>
-        <div data-ng-click='spaceSelect(0)' class='space bottom'>{{gameboard.spaces[0]}}</div>
+        <div data-ng-click='spaceSelect(0)'
+          class='space bottom'>{{gameboard.spaces[0]}}</div>
         <div data-ng-click='spaceSelect(1)' class='space bottom central'>{{gameboard.spaces[1]}}</div>
         <div data-ng-click='spaceSelect(2)' class='space bottom'>{{gameboard.spaces[2]}}</div>
         <div data-ng-click='spaceSelect(3)' class='space bottom'>{{gameboard.spaces[3]}}</div>
@@ -128,7 +129,7 @@
         <div data-ng-click='spaceSelect(88)' class='space'>{{gameboard.spaces[88]}}</div>
       </div>
     </div>
-  <button data-ng-click='newgame()'>New Game</button>
+    <button data-ng-click='newgame()'>New Game</button>
   </div>
 
 
