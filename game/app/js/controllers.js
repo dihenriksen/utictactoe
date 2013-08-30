@@ -131,18 +131,6 @@ angular.module('utictactoe.controllers', []).
         }
       }
 
-  		promise.then(function() {
-  			$scope.$watch('gameboard');
-  		});
-  	}
-	])
-  .controller('NewGameCtrl', [
-    '$scope',
-    'angularFire',
-    function($scope, angularFire) {
-      var url = 'http://utictactoe.firebaseio.com/gameboard';
-      var promise = angularFire(url, $scope, 'gameboard', {});
-
       $scope.newgame = function() {
         for (var space in $scope.gameboard.spaces) {
           $scope.gameboard.spaces[space] = '';
@@ -160,11 +148,11 @@ angular.module('utictactoe.controllers', []).
         console.log($scope.disabled0);
       }
 
-      promise.then(function() {
-        $scope.$watch('gameboard');
-      })
-    }
-  ])
+  		promise.then(function() {
+  			$scope.$watch('gameboard');
+  		});
+  	}
+	]);
 
 
 
