@@ -6,11 +6,11 @@
 }
 
 .disabled-true {
-	background-color: red;
+	background-color: grey;
 }
 
 .disabled-true div {
-	background-color: red;
+	background-color: grey;
 }
 
 .sector {
