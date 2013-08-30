@@ -2,11 +2,19 @@
 	height: 308px;
 	width: 308px;
 	border: 1px solid black;
-	margin: 5px;
+	margin: auto;
+}
+
+button {
+	margin: 10px 0 0 0;
 }
 
 .disabled-true {
 	background-color: grey;
+}
+
+div .disabled-false {
+	border: 3px solid #4FDBD4;
 }
 
 .disabled-true div {
