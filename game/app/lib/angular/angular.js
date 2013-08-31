@@ -203,7 +203,7 @@ function nextUid() {
 
 /**
  * Set or clear the hashkey for an object.
- * @param obj object 
+ * @param obj object
  * @param h the hashkey (!truthy to delete the hashkey)
  */
 function setHashKey(obj, h) {
@@ -2051,21 +2051,21 @@ forEach({
                 }
               }
               return false;
-            };	
+            };
 
           events[type] = [];
-		
+
 		  // Refer to jQuery's implementation of mouseenter & mouseleave
           // Read about mouseenter and mouseleave:
           // http://www.quirksmode.org/js/events_mouse.html#link8
-          var eventmap = { mouseleave : "mouseout", mouseenter : "mouseover"}          
+          var eventmap = { mouseleave : "mouseout", mouseenter : "mouseover"}
           bindFn(element, eventmap[type], function(event) {
             var ret, target = this, related = event.relatedTarget;
             // For mousenter/leave call the handler if related is outside the target.
             // NB: No relatedTarget if the mouse left/entered the browser window
             if ( !related || (related !== target && !contains(target, related)) ){
               handle(event, type);
-            }	
+            }
 
           });
 
@@ -6753,25 +6753,25 @@ function $ParseProvider() {
  *   you can treat promises attached to a scope as if they were the resulting values.
  * - Q has many more features than $q, but that comes at a cost of bytes. $q is tiny, but contains
  *   all the important functionality needed for common async tasks.
- * 
+ *
  *  # Testing
- * 
+ *
  *  <pre>
  *    it('should simulate promise', inject(function($q, $rootScope) {
  *      var deferred = $q.defer();
  *      var promise = deferred.promise;
  *      var resolvedValue;
- * 
+ *
  *      promise.then(function(value) { resolvedValue = value; });
  *      expect(resolvedValue).toBeUndefined();
- * 
+ *
  *      // Simulate resolving of promise
  *      deferred.resolve(123);
  *      // Note that the 'then' function does not get called synchronously.
  *      // This is because we want the promise API to always be async, whether or not
  *      // it got called synchronously or asynchronously.
  *      expect(resolvedValue).toBeUndefined();
- * 
+ *
  *      // Propagate promise resolution to 'then' functions using $apply().
  *      $rootScope.$apply();
  *      expect(resolvedValue).toEqual(123);
@@ -12905,20 +12905,20 @@ var ngControllerDirective = [function() {
  * @element html
  * @description
  * Enables [CSP (Content Security Policy)](https://developer.mozilla.org/en/Security/CSP) support.
- * 
+ *
  * This is necessary when developing things like Google Chrome Extensions.
- * 
+ *
  * CSP forbids apps to use `eval` or `Function(string)` generated functions (among other things).
  * For us to be compatible, we just need to implement the "getterFn" in $parse without violating
  * any of these restrictions.
- * 
+ *
  * AngularJS uses `Function(string)` generated functions as a speed optimization. By applying `ngCsp`
  * it is be possible to opt into the CSP compatible mode. When this mode is on AngularJS will
  * evaluate all expressions up to 30% slower than in non-CSP mode, but no security violations will
  * be raised.
- * 
+ *
  * In order to use this feature put `ngCsp` directive on the root element of the application.
- * 
+ *
  * @example
  * This example shows how to apply the `ngCsp` directive to the `html` tag.
    <pre>
@@ -13720,6 +13720,7 @@ var ngRepeatDirective = ngDirective({
           childScope.$first = (index === 0);
           childScope.$last = (index === arrayBound);
           childScope.$middle = !(childScope.$first || childScope.$last);
+          childScope.$odd = !(childScope.$even = index%2==0);
 
           if (!last) {
             linker(childScope, function(clone){
