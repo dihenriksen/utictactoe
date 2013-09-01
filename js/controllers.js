@@ -9,13 +9,9 @@ angular.module('utictactoe.controllers', []).
   	function($scope, angularFire) {
   		var url = 'http://utictactoe.firebaseio.com/gameboard';
   		var promise = angularFire(url, $scope, 'gameboard', {'spaces': [], 'moves': []});
-      var enabled = [];
-      var moves = [];
 
-      // populate the enabled array with all squares to start the game.
-      for (var i = 0; i <= 88; i++) {
-        enabled.push(i);
-      }
+      // turn = true means it is X's turn
+      // turn = false means it is O's turn
       var turn = true;
 
   		$scope.spaceSelect = function(i) {
@@ -138,37 +134,19 @@ angular.module('utictactoe.controllers', []).
         }
       }
 
+      //reset conditions for a new game
       $scope.newgame = function() {
         $scope.gameboard.enabled = [];
-
         $scope.gameboard.moves = [-1];
-
         $scope.gameboard.spaces = [];
         for (var i = 0; i <= 88; i++) {
           $scope.gameboard.spaces[i] = '';
         }
-        console.log($scope.gameboard.spaces);
         $scope.setEnabled(-1);
 
-        enabled = [];
-        for (var i = 0; i <= 88; i++) {
-          enabled.push(i);
-        }
         $scope.allEnabled = true;
-        moves = [];
-        for (var space in $scope.gameboard.spaces) {
-          $scope.gameboard.spaces[space] = '';
-        }
-        $scope.disabled0 = 'all';
-        $scope.disabled1 = 'all';
-        $scope.disabled2 = 'all';
-        $scope.disabled3 = 'all';
-        $scope.disabled4 = 'all';
-        $scope.disabled5 = 'all';
-        $scope.disabled6 = 'all';
-        $scope.disabled7 = 'all';
-        $scope.disabled8 = 'all';
-        $scope.disabled9 = 'all';
+
+        $scope.disabled0 = 'all';$scope.disabled1 = 'all';$scope.disabled2 = 'all';$scope.disabled3 = 'all';$scope.disabled4 = 'all';$scope.disabled5 = 'all';$scope.disabled6 = 'all';$scope.disabled7 = 'all';$scope.disabled8 = 'all';$scope.disabled9 = 'all';
       }
 
   		promise.then(function() {
