@@ -82,10 +82,10 @@ angular.module('utictactoe.controllers', []).
       }
 
       $scope.filledSector = function() {
-        // This function is for use when a particular a player is sent to a
+        // This function is for use when a player is sent to a
         // sector that is already full.
-        // It returns arr, and the returned value should be assigned to 'enabled'
-        // All squares other than those that have been played are allowed.
+        // It returns arr, and the returned value should be assigned to 'gameboard.enabled'
+        // All squares other than those that have been played on are allowed.
         var arr = [];
         for (var i = 0; i <= 88; i++) {
           if ($scope.gameboard.moves.indexOf(i) == -1) {
@@ -131,15 +131,18 @@ angular.module('utictactoe.controllers', []).
 
       //reset conditions for a new game
       $scope.newgame = function() {
-        $scope.gameboard.enabled = [];
         $scope.gameboard.moves = [-1];
-        $scope.gameboard.spaces = [];
+
         // turn = true means it is X's turn
         // turn = false means it is O's turn
         $scope.gameboard.turn = true;
+
+        $scope.gameboard.spaces = [];
         for (var i = 0; i <= 88; i++) {
           $scope.gameboard.spaces[i] = '';
         }
+
+        $scope.gameboard.enabled = [];
         $scope.setEnabled(-1);
 
         $scope.gameboard.disabledSects = [];
