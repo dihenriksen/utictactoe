@@ -11,7 +11,7 @@
   <h1>Ultimate Tic Tac Toe Revolution: Extreme Edition</h1>
 
   <div id='board' data-ng-controller='GameCtrl'>
-    <div id='sector0' class='sector disabled-{{disabled0}}'>
+    <div id='sector0' class='sector disabled-{{disabledSects[0]}}'>
       <div class='board-container clearfix'>
         <div data-ng-click='spaceSelect(0)'
           class='space bottom'>{{gameboard.spaces[0]}}</div>
@@ -25,7 +25,7 @@
         <div data-ng-click='spaceSelect(8)' class='space'>{{gameboard.spaces[8]}}</div>
       </div>
     </div>
-    <div id='sector1' class='sector disabled-{{disabled1}}'>
+    <div id='sector1' class='sector disabled-{{disabledSects[1]}}'>
       <div class='board-container clearfix'>
         <div data-ng-click='spaceSelect(10)' class='space bottom'>{{gameboard.spaces[10]}}</div>
         <div data-ng-click='spaceSelect(11)' class='space bottom central'>{{gameboard.spaces[11]}}</div>
@@ -38,7 +38,7 @@
         <div data-ng-click='spaceSelect(18)' class='space'>{{gameboard.spaces[18]}}</div>
       </div>
     </div>
-    <div id='sector2' class='sector disabled-{{disabled2}}'>
+    <div id='sector2' class='sector disabled-{{disabledSects[2]}}'>
       <div class='board-container clearfix'>
         <div data-ng-click='spaceSelect(20)' class='space bottom'>{{gameboard.spaces[20]}}</div>
         <div data-ng-click='spaceSelect(21)' class='space bottom central'>{{gameboard.spaces[21]}}</div>
@@ -51,7 +51,7 @@
         <div data-ng-click='spaceSelect(28)' class='space'>{{gameboard.spaces[28]}}</div>
       </div>
     </div>
-    <div id='sector3' class='sector disabled-{{disabled3}}'>
+    <div id='sector3' class='sector disabled-{{disabledSects[3]}}'>
       <div class='board-container clearfix'>
         <div data-ng-click='spaceSelect(30)' class='space bottom'>{{gameboard.spaces[30]}}</div>
         <div data-ng-click='spaceSelect(31)' class='space bottom central'>{{gameboard.spaces[31]}}</div>
@@ -64,7 +64,7 @@
         <div data-ng-click='spaceSelect(38)' class='space'>{{gameboard.spaces[38]}}</div>
       </div>
     </div>
-    <div id='sector4' class='sector disabled-{{disabled4}}'>
+    <div id='sector4' class='sector disabled-{{disabledSects[4]}}'>
       <div class='board-container clearfix'>
         <div data-ng-click='spaceSelect(40)' class='space bottom'>{{gameboard.spaces[40]}}</div>
         <div data-ng-click='spaceSelect(41)' class='space bottom central'>{{gameboard.spaces[41]}}</div>
@@ -77,7 +77,7 @@
         <div data-ng-click='spaceSelect(48)' class='space'>{{gameboard.spaces[48]}}</div>
       </div>
     </div>
-    <div id='sector5' class='sector disabled-{{disabled5}}'>
+    <div id='sector5' class='sector disabled-{{disabledSects[5]}}'>
       <div class='board-container clearfix'>
         <div data-ng-click='spaceSelect(50)' class='space bottom'>{{gameboard.spaces[50]}}</div>
         <div data-ng-click='spaceSelect(51)' class='space bottom central'>{{gameboard.spaces[51]}}</div>
@@ -90,7 +90,7 @@
         <div data-ng-click='spaceSelect(58)' class='space'>{{gameboard.spaces[58]}}</div>
       </div>
     </div>
-    <div id='sector6' class='sector disabled-{{disabled6}}'>
+    <div id='sector6' class='sector disabled-{{disabledSects[6]}}'>
       <div class='board-container clearfix'>
         <div data-ng-click='spaceSelect(60)' class='space bottom'>{{gameboard.spaces[60]}}</div>
         <div data-ng-click='spaceSelect(61)' class='space bottom central'>{{gameboard.spaces[61]}}</div>
@@ -103,7 +103,7 @@
         <div data-ng-click='spaceSelect(68)' class='space'>{{gameboard.spaces[68]}}</div>
       </div>
     </div>
-    <div id='sector7' class='sector disabled-{{disabled7}}'>
+    <div id='sector7' class='sector disabled-{{disabledSects[7]}}'>
       <div class='board-container clearfix'>
         <div data-ng-click='spaceSelect(70)' class='space bottom'>{{gameboard.spaces[70]}}</div>
         <div data-ng-click='spaceSelect(71)' class='space bottom central'>{{gameboard.spaces[71]}}</div>
@@ -116,7 +116,7 @@
         <div data-ng-click='spaceSelect(78)' class='space'>{{gameboard.spaces[78]}}</div>
       </div>
     </div>
-    <div id='sector8' class='sector disabled-{{disabled8}}'>
+    <div id='sector8' class='sector disabled-{{disabledSects[8]}}'>
       <div class='board-container clearfix'>
         <div data-ng-click='spaceSelect(80)' class='space bottom'>{{gameboard.spaces[80]}}</div>
         <div data-ng-click='spaceSelect(81)' class='space bottom central'>{{gameboard.spaces[81]}}</div>
