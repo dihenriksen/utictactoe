@@ -13,12 +13,13 @@ angular.module('utictactoe.controllers', []).
 
       // This function makes a move on the board.
   		$scope.spaceSelect = function(i) {
-        if (turn === null && $scope.gameboard.moves.length === 2) {
+        if (turn === null && $scope.gameboard.moves.length === 1) {
+          turn = true;
+        } else if (turn === null) {
           turn = false;
         }
 
         if (turn === $scope.gameboard.turn) {
-          console.log('move');
           if ($scope.gameboard.enabled.indexOf(i) != -1) {
             if ($scope.gameboard.turn) {
               $scope.gameboard.spaces[i] = 'X';
@@ -140,7 +141,6 @@ angular.module('utictactoe.controllers', []).
 
       //reset conditions for a new game
       $scope.newgame = function() {
-        turn = true;
         $scope.gameboard.moves = [-1];
 
         // turn = true means it is X's turn
