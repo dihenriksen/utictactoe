@@ -9,21 +9,30 @@ angular.module('utictactoe.controllers', []).
   	function($scope, angularFire) {
   		var url = 'http://utictactoe.firebaseio.com/gameboard';
   		var promise = angularFire(url, $scope, 'gameboard', {});
+      var turn = null;
 
       // This function makes a move on the board.
   		$scope.spaceSelect = function(i) {
-        if ($scope.gameboard.enabled.indexOf(i) != -1) {
-          if ($scope.gameboard.turn) {
-            $scope.gameboard.spaces[i] = 'X';
-          } else {
-            $scope.gameboard.spaces[i] = 'O';
-          }
-          $scope.gameboard.moves.push(i);
-          $scope.gameboard.enabled = [];
-          $scope.showEnabledSectors(i);
-          $scope.setEnabled(i);
-          $scope.gameboard.turn = !$scope.gameboard.turn;
+        if (turn === null && $scope.gameboard.moves.length === 2) {
+          turn = false;
         }
+
+        if (turn === $scope.gameboard.turn) {
+          console.log('move');
+          if ($scope.gameboard.enabled.indexOf(i) != -1) {
+            if ($scope.gameboard.turn) {
+              $scope.gameboard.spaces[i] = 'X';
+            } else {
+              $scope.gameboard.spaces[i] = 'O';
+            }
+            $scope.gameboard.moves.push(i);
+            $scope.gameboard.enabled = [];
+            $scope.showEnabledSectors(i);
+            $scope.setEnabled(i);
+            $scope.gameboard.turn = !$scope.gameboard.turn;
+          }
+        }
+
       };
 
       //controls the squares that are enabled, sending data to firebase
@@ -131,6 +140,7 @@ angular.module('utictactoe.controllers', []).
 
       //reset conditions for a new game
       $scope.newgame = function() {
+        turn = true;
         $scope.gameboard.moves = [-1];
 
         // turn = true means it is X's turn
