@@ -55,14 +55,17 @@ angular.module('utictactoe.controllers', []).
       $scope.checkSector = function(i, turn) {
         var s = Math.floor(i/10)*10;
 
-        if ($scope.doChecking(s, s+1, s+2)) {}
-        else if ($scope.doChecking(s+3, s+4, s+5)) {}
-        else if ($scope.doChecking(s+6, s+7, s+8)) {}
-        else if ($scope.doChecking(s, s+4, s+8)) {}
-        else if ($scope.doChecking(s+2, s+4, s+6)) {}
-        else if ($scope.doChecking(s, s+3, s+6)) {}
-        else if ($scope.doChecking(s+1, s+4, s+7)) {}
-        else { $scope.doChecking(s+2, s+5, s+8) }
+        if ($scope.gameboard.result[s/10] === '') {
+          if ($scope.doChecking(s, s+1, s+2)) {}
+          else if ($scope.doChecking(s+3, s+4, s+5)) {}
+          else if ($scope.doChecking(s+6, s+7, s+8)) {}
+          else if ($scope.doChecking(s, s+4, s+8)) {}
+          else if ($scope.doChecking(s+2, s+4, s+6)) {}
+          else if ($scope.doChecking(s, s+3, s+6)) {}
+          else if ($scope.doChecking(s+1, s+4, s+7)) {}
+          else { $scope.doChecking(s+2, s+5, s+8) }
+        }
+
         console.log($scope.gameboard.result);
       }
 
@@ -208,7 +211,7 @@ angular.module('utictactoe.controllers', []).
         $scope.gameboard.disabledSects = [];
         $scope.gameboard.disabledSects[0] = 'all';$scope.gameboard.disabledSects[1] = 'all';$scope.gameboard.disabledSects[2] = 'all';$scope.gameboard.disabledSects[3] = 'all';$scope.gameboard.disabledSects[4] = 'all';$scope.gameboard.disabledSects[5] = 'all';$scope.gameboard.disabledSects[6] = 'all';$scope.gameboard.disabledSects[7] = 'all';$scope.gameboard.disabledSects[8] = 'all';
 
-        $scope.gameboard.result = ['','','','','','','','','']
+        $scope.gameboard.result = ['','','','','','','','',''];
       }
 
   		promise.then(function() {
