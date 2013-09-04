@@ -6,18 +6,21 @@ angular.module('utictactoe.controllers', []).
   controller('GameCtrl', [
   	'$scope',
   	'angularFire',
-  	function($scope, angularFire) {
+    '$cookies',
+  	function($scope, angularFire, $cookies) {
   		var url = 'http://utictactoe.firebaseio.com/gameboard';
   		var promise = angularFire(url, $scope, 'gameboard', {});
       var turn = null;
 
       // This function makes a move on the board.
   		$scope.spaceSelect = function(i) {
-        if (turn === null && $scope.gameboard.moves.length === 1) {
+        if (turn === null && $scope.gameboard.moves[0] === -1) {
           turn = true;
         } else if (turn === null) {
           turn = false;
         }
+
+        console.log(turn);
 
         if (turn === $scope.gameboard.turn) {
           if ($scope.gameboard.enabled.indexOf(i) != -1) {
@@ -26,7 +29,8 @@ angular.module('utictactoe.controllers', []).
             } else {
               $scope.gameboard.spaces[i] = 'O';
             }
-            $scope.gameboard.moves.push(i);
+            if ($scope.gameboard.moves[0] === -1) { $scope.gameboard.moves[0] = i; }
+            else { $scope.gameboard.moves.push(i); }
             $scope.gameboard.enabled = [];
             $scope.showEnabledSectors(i);
             $scope.setEnabled(i);
@@ -139,6 +143,11 @@ angular.module('utictactoe.controllers', []).
         }
       }
 
+      $scope.turnDisplay = function() {
+        console.log('Inside turnDisplay');
+        $scope.turnInfo = 'Your turn';
+      }
+
       //reset conditions for a new game
       $scope.newgame = function() {
         $scope.gameboard.moves = [-1];
@@ -162,6 +171,9 @@ angular.module('utictactoe.controllers', []).
 
   		promise.then(function() {
   			$scope.$watch('gameboard');
+        // $cookies.username = 'Damien';
+        // $cookies.turn = true;
+        console.log($cookies);
   		});
   	}
 	]);
