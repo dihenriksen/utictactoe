@@ -2,6 +2,12 @@
 
 /* Controllers */
 
+
+// Refactoring:
+// 1. user ng-repeat to generate board
+// 2. eliminate moves array - use spaces instead
+// 3. eliminate local turn variable
+
 angular.module('utictactoe.controllers', []).
   controller('GameCtrl', [
   	'$scope',
@@ -11,6 +17,8 @@ angular.module('utictactoe.controllers', []).
   		var url = 'http://utictactoe.firebaseio.com/gameboard';
   		var promise = angularFire(url, $scope, 'gameboard', {});
       var turn = null;
+      var result = [];
+
 
       // This function makes a move on the board.
   		$scope.spaceSelect = function(i) {
@@ -20,8 +28,6 @@ angular.module('utictactoe.controllers', []).
           turn = false;
         }
 
-        console.log(turn);
-
         if (turn === $scope.gameboard.turn) {
           if ($scope.gameboard.enabled.indexOf(i) != -1) {
             if ($scope.gameboard.turn) {
@@ -29,8 +35,14 @@ angular.module('utictactoe.controllers', []).
             } else {
               $scope.gameboard.spaces[i] = 'O';
             }
-            if ($scope.gameboard.moves[0] === -1) { $scope.gameboard.moves[0] = i; }
-            else { $scope.gameboard.moves.push(i); }
+            if ($scope.gameboard.moves[0] === -1) {
+              $scope.gameboard.moves[0] = i;
+            } else {
+              $scope.gameboard.moves.push(i);
+            }
+
+            $scope.checkSector(i, turn);
+
             $scope.gameboard.enabled = [];
             $scope.showEnabledSectors(i);
             $scope.setEnabled(i);
@@ -39,6 +51,34 @@ angular.module('utictactoe.controllers', []).
         }
 
       };
+
+
+      $scope.checkSector = function(i, turn) {
+        var s = Math.floor(i/10)*10;
+
+        if ($scope.doChecking(s, s+1, s+2)) {}
+        else if ($scope.doChecking(s+3, s+4, s+5)) {}
+        else if ($scope.doChecking(s+6, s+7, s+8)) {}
+        else if ($scope.doChecking(s, s+4, s+8)) {}
+        else if ($scope.doChecking(s+2, s+4, s+6)) {}
+        else if ($scope.doChecking(s, s+3, s+6)) {}
+        else if ($scope.doChecking(s+1, s+4, s+7)) {}
+        else { $scope.doChecking(s+2, s+5, s+8) }
+        console.log(result);
+      }
+
+
+      $scope.doChecking = function(a, b, c) {
+        var s = Math.floor(a/10);
+        if ($scope.gameboard.spaces[a] === 'X' && $scope.gameboard.spaces[b] === 'X' && $scope.gameboard.spaces[c] === 'X') {
+          result[s] = 'X';
+          return true;
+        } else if ($scope.gameboard.spaces[a] === 'O' && $scope.gameboard.spaces[b] === 'O' && $scope.gameboard.spaces[c] === 'O') {
+          result[s] = 'O';
+          return true;
+        }
+      }
+
 
       //controls the squares that are enabled, sending data to firebase
       $scope.setEnabled = function(k) {
@@ -150,12 +190,14 @@ angular.module('utictactoe.controllers', []).
 
       //reset conditions for a new game
       $scope.newgame = function() {
+        // moves array stores which places have been played in
         $scope.gameboard.moves = [-1];
 
         // turn = true means it is X's turn
         // turn = false means it is O's turn
         $scope.gameboard.turn = true;
 
+        // spaces array stores an X, O, or empty string for each place
         $scope.gameboard.spaces = [];
         for (var i = 0; i <= 88; i++) {
           $scope.gameboard.spaces[i] = '';
@@ -167,6 +209,10 @@ angular.module('utictactoe.controllers', []).
         $scope.gameboard.disabledSects = [];
         $scope.gameboard.disabledSects[0] = 'all';$scope.gameboard.disabledSects[1] = 'all';$scope.gameboard.disabledSects[2] = 'all';$scope.gameboard.disabledSects[3] = 'all';$scope.gameboard.disabledSects[4] = 'all';$scope.gameboard.disabledSects[5] = 'all';$scope.gameboard.disabledSects[6] = 'all';$scope.gameboard.disabledSects[7] = 'all';$scope.gameboard.disabledSects[8] = 'all';
 
+        $scope.gameboard.minorOutcomes = [];
+        for (var i = 0; i <= 8; i++) {
+          $scope.gameboard.minorOutcomes.push('_________');
+        }
       }
 
   		promise.then(function() {
