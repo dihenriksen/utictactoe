@@ -5,5 +5,6 @@
 angular.module('utictactoe',
 	[
 		'firebase',
-		'utictactoe.controllers'
+		'utictactoe.controllers',
+		'ngCookies'
 	]);
