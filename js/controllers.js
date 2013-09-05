@@ -40,7 +40,10 @@ angular.module('utictactoe.controllers', []).
               $scope.gameboard.moves.push(i);
             }
 
-            $scope.checkSector(i, turn);
+            $scope.checkSector(i);
+            if ($scope.gameboard.moves.length >= 18) {
+              $scope.checkWin(i);
+            }
 
             $scope.gameboard.enabled = [];
             $scope.showEnabledSectors(i);
@@ -52,7 +55,16 @@ angular.module('utictactoe.controllers', []).
       };
 
 
-      $scope.checkSector = function(i, turn) {
+      $scope.checkWin = function(i) {
+
+      }
+
+      $scope.doWinChecking = function(a, b, c) {
+
+      }
+
+
+      $scope.checkSector = function(i) {
         var s = Math.floor(i/10)*10;
 
         if ($scope.gameboard.result[s/10] === '') {
@@ -65,8 +77,6 @@ angular.module('utictactoe.controllers', []).
           else if ($scope.doChecking(s+1, s+4, s+7)) {}
           else { $scope.doChecking(s+2, s+5, s+8) }
         }
-
-        console.log($scope.gameboard.result);
       }
 
 
@@ -74,9 +84,11 @@ angular.module('utictactoe.controllers', []).
         var s = Math.floor(a/10);
         if ($scope.gameboard.spaces[a] === 'X' && $scope.gameboard.spaces[b] === 'X' && $scope.gameboard.spaces[c] === 'X') {
           $scope.gameboard.result[s] = 'X';
+          $scope.gameboard.xshow[s] = true;
           return true;
         } else if ($scope.gameboard.spaces[a] === 'O' && $scope.gameboard.spaces[b] === 'O' && $scope.gameboard.spaces[c] === 'O') {
           $scope.gameboard.result[s] = 'O';
+          $scope.gameboard.oshow[s] = true;
           return true;
         }
       }
@@ -192,26 +204,31 @@ angular.module('utictactoe.controllers', []).
 
       //reset conditions for a new game
       $scope.newgame = function() {
-        // moves array stores which places have been played in
+        // the 'moves' array stores which spaces have been played in
         $scope.gameboard.moves = [-1];
 
         // turn = true means it is X's turn
         // turn = false means it is O's turn
         $scope.gameboard.turn = true;
 
-        // spaces array stores an X, O, or empty string for each place
+        // spaces array stores an X, O, or empty string for each space
         $scope.gameboard.spaces = [];
         for (var i = 0; i <= 88; i++) {
           $scope.gameboard.spaces[i] = '';
         }
 
+        // stores which spaces a player may play in
         $scope.gameboard.enabled = [];
         $scope.setEnabled(-1);
 
+        // for controlling the css of enabled and disabled sectors
         $scope.gameboard.disabledSects = [];
         $scope.gameboard.disabledSects[0] = 'all';$scope.gameboard.disabledSects[1] = 'all';$scope.gameboard.disabledSects[2] = 'all';$scope.gameboard.disabledSects[3] = 'all';$scope.gameboard.disabledSects[4] = 'all';$scope.gameboard.disabledSects[5] = 'all';$scope.gameboard.disabledSects[6] = 'all';$scope.gameboard.disabledSects[7] = 'all';$scope.gameboard.disabledSects[8] = 'all';
 
         $scope.gameboard.result = ['','','','','','','','',''];
+
+        $scope.gameboard.xshow = [false, false, false, false, false, false, false, false, false];
+        $scope.gameboard.oshow = [false, false, false, false, false, false, false, false, false];
       }
 
   		promise.then(function() {

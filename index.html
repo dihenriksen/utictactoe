@@ -13,6 +13,8 @@
   <div id='board' data-ng-controller='GameCtrl'>
     <div id='sector0' class='sector disabled-{{gameboard.disabledSects[0]}}'>
       <div class='board-container clearfix'>
+        <div class='X' data-ng-show='gameboard.xshow[0]'>X</div>
+        <div class='O' data-ng-show='gameboard.oshow[0]'>O</div>
         <div data-ng-click='spaceSelect(0)' class='space bottom'>{{gameboard.spaces[0]}}</div>
         <div data-ng-click='spaceSelect(1)' class='space bottom central'>{{gameboard.spaces[1]}}</div>
         <div data-ng-click='spaceSelect(2)' class='space bottom'>{{gameboard.spaces[2]}}</div>
@@ -22,10 +24,13 @@
         <div data-ng-click='spaceSelect(6)' class='space'>{{gameboard.spaces[6]}}</div>
         <div data-ng-click='spaceSelect(7)' class='space central'>{{gameboard.spaces[7]}}</div>
         <div data-ng-click='spaceSelect(8)' class='space'>{{gameboard.spaces[8]}}</div>
+
       </div>
     </div>
     <div id='sector1' class='sector disabled-{{gameboard.disabledSects[1]}}'>
       <div class='board-container clearfix'>
+        <div class='X' data-ng-show='gameboard.xshow[1]'>X</div>
+        <div class='O' data-ng-show='gameboard.oshow[1]'>O</div>
         <div data-ng-click='spaceSelect(10)' class='space bottom'>{{gameboard.spaces[10]}}</div>
         <div data-ng-click='spaceSelect(11)' class='space bottom central'>{{gameboard.spaces[11]}}</div>
         <div data-ng-click='spaceSelect(12)' class='space bottom'>{{gameboard.spaces[12]}}</div>
@@ -39,6 +44,8 @@
     </div>
     <div id='sector2' class='sector disabled-{{gameboard.disabledSects[2]}}'>
       <div class='board-container clearfix'>
+        <div class='X' data-ng-show='gameboard.xshow[2]'>X</div>
+        <div class='O' data-ng-show='gameboard.oshow[2]'>O</div>
         <div data-ng-click='spaceSelect(20)' class='space bottom'>{{gameboard.spaces[20]}}</div>
         <div data-ng-click='spaceSelect(21)' class='space bottom central'>{{gameboard.spaces[21]}}</div>
         <div data-ng-click='spaceSelect(22)' class='space bottom'>{{gameboard.spaces[22]}}</div>
@@ -52,6 +59,8 @@
     </div>
     <div id='sector3' class='sector disabled-{{gameboard.disabledSects[3]}}'>
       <div class='board-container clearfix'>
+        <div class='X' data-ng-show='gameboard.xshow[3]'>X</div>
+        <div class='O' data-ng-show='gameboard.oshow[3]'>O</div>
         <div data-ng-click='spaceSelect(30)' class='space bottom'>{{gameboard.spaces[30]}}</div>
         <div data-ng-click='spaceSelect(31)' class='space bottom central'>{{gameboard.spaces[31]}}</div>
         <div data-ng-click='spaceSelect(32)' class='space bottom'>{{gameboard.spaces[32]}}</div>
@@ -65,6 +74,8 @@
     </div>
     <div id='sector4' class='sector disabled-{{gameboard.disabledSects[4]}}'>
       <div class='board-container clearfix'>
+        <div class='X' data-ng-show='gameboard.xshow[4]'>X</div>
+        <div class='O' data-ng-show='gameboard.oshow[4]'>O</div>
         <div data-ng-click='spaceSelect(40)' class='space bottom'>{{gameboard.spaces[40]}}</div>
         <div data-ng-click='spaceSelect(41)' class='space bottom central'>{{gameboard.spaces[41]}}</div>
         <div data-ng-click='spaceSelect(42)' class='space bottom'>{{gameboard.spaces[42]}}</div>
@@ -78,6 +89,8 @@
     </div>
     <div id='sector5' class='sector disabled-{{gameboard.disabledSects[5]}}'>
       <div class='board-container clearfix'>
+        <div class='X' data-ng-show='gameboard.xshow[5]'>X</div>
+        <div class='O' data-ng-show='gameboard.oshow[5]'>O</div>
         <div data-ng-click='spaceSelect(50)' class='space bottom'>{{gameboard.spaces[50]}}</div>
         <div data-ng-click='spaceSelect(51)' class='space bottom central'>{{gameboard.spaces[51]}}</div>
         <div data-ng-click='spaceSelect(52)' class='space bottom'>{{gameboard.spaces[52]}}</div>
@@ -91,6 +104,8 @@
     </div>
     <div id='sector6' class='sector disabled-{{gameboard.disabledSects[6]}}'>
       <div class='board-container clearfix'>
+        <div class='X' data-ng-show='gameboard.xshow[6]'>X</div>
+        <div class='O' data-ng-show='gameboard.oshow[6]'>O</div>
         <div data-ng-click='spaceSelect(60)' class='space bottom'>{{gameboard.spaces[60]}}</div>
         <div data-ng-click='spaceSelect(61)' class='space bottom central'>{{gameboard.spaces[61]}}</div>
         <div data-ng-click='spaceSelect(62)' class='space bottom'>{{gameboard.spaces[62]}}</div>
@@ -104,6 +119,8 @@
     </div>
     <div id='sector7' class='sector disabled-{{gameboard.disabledSects[7]}}'>
       <div class='board-container clearfix'>
+        <div class='X' data-ng-show='gameboard.xshow[7]'>X</div>
+        <div class='O' data-ng-show='gameboard.oshow[7]'>O</div>
         <div data-ng-click='spaceSelect(70)' class='space bottom'>{{gameboard.spaces[70]}}</div>
         <div data-ng-click='spaceSelect(71)' class='space bottom central'>{{gameboard.spaces[71]}}</div>
         <div data-ng-click='spaceSelect(72)' class='space bottom'>{{gameboard.spaces[72]}}</div>
@@ -117,6 +134,8 @@
     </div>
     <div id='sector8' class='sector disabled-{{gameboard.disabledSects[8]}}'>
       <div class='board-container clearfix'>
+        <div class='X' data-ng-show='gameboard.xshow[8]'>X</div>
+        <div class='O' data-ng-show='gameboard.oshow[8]'>O</div>
         <div data-ng-click='spaceSelect(80)' class='space bottom'>{{gameboard.spaces[80]}}</div>
         <div data-ng-click='spaceSelect(81)' class='space bottom central'>{{gameboard.spaces[81]}}</div>
         <div data-ng-click='spaceSelect(82)' class='space bottom'>{{gameboard.spaces[82]}}</div>
