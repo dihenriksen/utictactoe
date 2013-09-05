@@ -5,6 +5,28 @@
 	margin: auto;
 }
 
+.O {
+	font-size: 100px;
+	color: #E8430C;
+	opacity: .3;
+	position: absolute;
+	width: 100%;
+	line-height: 90px;
+	text-align: center;
+	pointer-events: none;
+}
+
+.X {
+	font-size: 100px;
+	color: #2A69FA;
+	opacity: .3;
+	position: absolute;
+	width: 100%;
+	line-height: 90px;
+	text-align: center;
+	pointer-events: none;
+}
+
 button {
 	margin: 10px 0 0 0;
 }
@@ -33,8 +55,9 @@ div .disabled-false {
 	float: left;
 	height: 30px;
 	width: 30px;
-	padding-top: 6px;
 	text-align: center;
+	line-height: 30px;
+	z-index: 1000;
 }
 
 .bottom {
@@ -47,14 +70,15 @@ div .disabled-false {
 }
 
 .board-container {
-	height: 92px;
-	width: 92px;
+	height: 90px;
+	width: 90px;
 	position: absolute;
 	top: 0;
 	bottom: 0;
 	right: 0;
 	left: 0;
 	margin: auto;
+	z-index: 500;
 }
 
 .clearfix:after {
