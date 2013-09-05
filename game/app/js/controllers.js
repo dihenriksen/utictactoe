@@ -261,6 +261,18 @@ angular.module('utictactoe.controllers', []).
         $scope.turnInfo = 'Your turn';
       }
 
+
+      $scope.resign = function() {
+        if (($scope.gameboard.winner = !$scope.gameboard.turn) === true) {
+          alert('X Wins!');
+        } else { alert('O Wins!') }
+
+        $scope.gameboard.enabled = [-1];
+        $scope.gameboard.disabledSects[0] = true;$scope.gameboard.disabledSects[1] = true;$scope.gameboard.disabledSects[2] = true;$scope.gameboard.disabledSects[3] = true;$scope.gameboard.disabledSects[4] = true;$scope.gameboard.disabledSects[5] = true;$scope.gameboard.disabledSects[6] = true;$scope.gameboard.disabledSects[7] = true;$scope.gameboard.disabledSects[8] = true;
+        $scope.gameboard.inProgress = false;
+      }
+
+
       //reset conditions for a new game
       $scope.newgame = function() {
         // the 'moves' array stores which spaces have been played in
