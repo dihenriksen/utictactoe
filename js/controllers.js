@@ -42,7 +42,7 @@ angular.module('utictactoe.controllers', []).
 
             $scope.checkSector(i);
             if ($scope.gameboard.moves.length >= 18) {
-              $scope.checkWin(i);
+              $scope.checkWin();
             }
 
             $scope.gameboard.enabled = [];
@@ -55,12 +55,24 @@ angular.module('utictactoe.controllers', []).
       };
 
 
-      $scope.checkWin = function(i) {
-
+      $scope.checkWin = function() {
+        if ($scope.doWinChecking(0, 1, 2)) {}
+        else if ($scope.doWinChecking(3, 4, 5)) {}
+        else if ($scope.doWinChecking(6, 7, 8)) {}
+        else if ($scope.doWinChecking(0, 4, 8)) {}
+        else if ($scope.doWinChecking(2, 4, 6)) {}
+        else if ($scope.doWinChecking(0, 3, 6)) {}
+        else if ($scope.doWinChecking(1, 4, 7)) {}
+        else { $scope.doWinChecking(2, 5, 8) }
       }
 
-      $scope.doWinChecking = function(a, b, c) {
 
+      $scope.doWinChecking = function(a, b, c) {
+        if ($scope.gameboard.result[a] === 'X' && $scope.gameboard.result[b] === 'X' && $scope.gameboard.result[c] === 'X') {
+          alert('X wins');
+        } else if ($scope.gameboard.result[a] === 'O' && $scope.gameboard.result[b] === 'O' && $scope.gameboard.result[c] === 'O') {
+          alert('O wins');
+        }
       }
 
 
