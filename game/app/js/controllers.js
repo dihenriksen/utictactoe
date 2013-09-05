@@ -17,6 +17,7 @@ angular.module('utictactoe.controllers', []).
   		var url = 'http://utictactoe.firebaseio.com/gameboard';
   		var promise = angularFire(url, $scope, 'gameboard', {});
       var turn = null;
+      var turnTest = true; //for testing purposes only
 
 
       // This function makes a move on the board.
@@ -27,6 +28,44 @@ angular.module('utictactoe.controllers', []).
           turn = false;
         }
 
+        // This section should only be enabled when testing the application.
+        // It allows play in one window.
+        // if ($scope.gameboard.enabled.indexOf(i) != -1) {
+        //   if (turnTest) {
+        //     $scope.gameboard.spaces[i] = 'X';
+        //   } else {
+        //     $scope.gameboard.spaces[i] = 'O';
+        //   }
+        //   if ($scope.gameboard.moves[0] === -1) {
+        //     $scope.gameboard.moves[0] = i;
+        //   } else {
+        //     $scope.gameboard.moves.push(i);
+        //   }
+
+        //   $scope.checkSector(i);
+        //   if ($scope.gameboard.moves.length >= 18) {
+        //     $scope.checkWin();
+        //     if ($scope.gameboard.winner === true) {
+        //       alert('X Wins!');
+        //     } else if ($scope.gameboard.winner === false) {
+        //       alert('O Wins!')
+        //     } else if ($scope.gameboard.moves.length === 81) {
+        //       alert('It\'s a tie!')
+        //     }
+        //   }
+
+        //   $scope.gameboard.enabled = [];
+        //   $scope.showEnabledSectors(i);
+        //   $scope.setEnabled(i);
+        //   turnTest = !turnTest;
+        // }
+
+
+
+
+
+
+        // The real code
         if (turn === $scope.gameboard.turn) {
           if ($scope.gameboard.enabled.indexOf(i) != -1) {
             if ($scope.gameboard.turn) {
@@ -43,9 +82,9 @@ angular.module('utictactoe.controllers', []).
             $scope.checkSector(i);
             if ($scope.gameboard.moves.length >= 18) {
               $scope.checkWin();
-              if ($scope.gameboard.winner = true) {
+              if ($scope.gameboard.winner === true) {
                 alert('X Wins!');
-              } else if ($scope.gameboard.winner = false) {
+              } else if ($scope.gameboard.winner === false) {
                 alert('O Wins!')
               } else if ($scope.gameboard.moves.length === 81) {
                 alert('It\'s a tie!')
@@ -75,8 +114,10 @@ angular.module('utictactoe.controllers', []).
 
       $scope.doWinChecking = function(a, b, c) {
         if ($scope.gameboard.result[a] === 'X' && $scope.gameboard.result[b] === 'X' && $scope.gameboard.result[c] === 'X') {
+          console.log($scope.gameboard.result);
           $scope.gameboard.winner = true;
         } else if ($scope.gameboard.result[a] === 'O' && $scope.gameboard.result[b] === 'O' && $scope.gameboard.result[c] === 'O') {
+          console.log($scope.gameboard.result);
           $scope.gameboard.winner = false;
         }
       }
