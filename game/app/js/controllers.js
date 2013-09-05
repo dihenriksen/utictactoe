@@ -51,7 +51,6 @@ angular.module('utictactoe.controllers', []).
             $scope.gameboard.turn = !$scope.gameboard.turn;
           }
         }
-
       };
 
 
@@ -249,8 +248,12 @@ angular.module('utictactoe.controllers', []).
         // $cookies.turn = true;
         console.log($cookies);
   		});
-  	}
-	]);
+  	}]).
+
+  controller('RulesCtrl', [
+    function() {
+
+    }])
 
 
 
