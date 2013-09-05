@@ -43,6 +43,13 @@ angular.module('utictactoe.controllers', []).
             $scope.checkSector(i);
             if ($scope.gameboard.moves.length >= 18) {
               $scope.checkWin();
+              if ($scope.gameboard.winner = true) {
+                alert('X Wins!');
+              } else if ($scope.gameboard.winner = false) {
+                alert('O Wins!')
+              } else if ($scope.gameboard.moves.length === 81) {
+                alert('It\'s a tie!')
+              }
             }
 
             $scope.gameboard.enabled = [];
@@ -68,9 +75,9 @@ angular.module('utictactoe.controllers', []).
 
       $scope.doWinChecking = function(a, b, c) {
         if ($scope.gameboard.result[a] === 'X' && $scope.gameboard.result[b] === 'X' && $scope.gameboard.result[c] === 'X') {
-          alert('X wins');
+          $scope.gameboard.winner = true;
         } else if ($scope.gameboard.result[a] === 'O' && $scope.gameboard.result[b] === 'O' && $scope.gameboard.result[c] === 'O') {
-          alert('O wins');
+          $scope.gameboard.winner = false;
         }
       }
 
@@ -240,13 +247,15 @@ angular.module('utictactoe.controllers', []).
 
         $scope.gameboard.xshow = [false, false, false, false, false, false, false, false, false];
         $scope.gameboard.oshow = [false, false, false, false, false, false, false, false, false];
+
+        $scope.gameboard.winner = null;
       }
 
   		promise.then(function() {
   			$scope.$watch('gameboard');
         // $cookies.username = 'Damien';
         // $cookies.turn = true;
-        console.log($cookies);
+        // console.log($cookies);
   		});
   	}]).
 
