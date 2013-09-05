@@ -290,6 +290,8 @@ angular.module('utictactoe.controllers', []).
         $scope.gameboard.oshow = [false, false, false, false, false, false, false, false, false];
 
         $scope.gameboard.winner = null;
+
+        $scope.gameboard.inProgress = true;
       }
 
   		promise.then(function() {
