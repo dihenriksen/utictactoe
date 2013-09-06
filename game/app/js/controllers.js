@@ -8,14 +8,37 @@
 // 2. eliminate moves array - use spaces instead
 // 3. eliminate local turn variable
 
-angular.module('utictactoe.controllers', []).
-  controller('GameCtrl', [
+angular.module('utictactoe.controllers', [])
+
+  .controller('AllGamesCtrl', [
+    '$scope',
+    'angularFire',
+    function($scope, angularFire) {
+
+      $scope.newgame = function() {
+        var playerId = 1;
+        var ref = new Firebase('https://utictactoe.firebaseio.com/queue');
+        ref.transaction(function(currentData) {
+          if (currentData === null) {
+            var game = ref.parent().child('games').push({
+              player1: playerId
+            })
+            return game.name();
+          } else {
+            ref.parent().child('games').child(currentData).child('player2').set(playerId);
+            return null;
+          }
+        });
+      }
+  }])
+
+  .controller('GameCtrl', [
   	'$scope',
   	'angularFire',
     '$cookies',
   	function($scope, angularFire, $cookies) {
-  		var url = 'http://utictactoe.firebaseio.com/gameboard';
-  		var promise = angularFire(url, $scope, 'gameboard', {});
+  		var ref = 'http://utictactoe.firebaseio.com/gameboard';
+  		var promise = angularFire(ref, $scope, 'gameboard', {});
       var turn = null;
       var turnTest = true; //for testing purposes only
 
@@ -312,9 +335,9 @@ angular.module('utictactoe.controllers', []).
         // $cookies.turn = true;
         // console.log($cookies);
   		});
-  	}]).
+  	}])
 
-  controller('RulesCtrl', [
+  .controller('RulesCtrl', [
     function() {
 
     }])
