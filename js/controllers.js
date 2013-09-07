@@ -7,13 +7,35 @@
 // 1. user ng-repeat to generate board
 // 2. eliminate moves array - use spaces instead
 // 3. eliminate local turn variable
+// 4. make each space an object, with properties like when they were played, value, etc.
 
 angular.module('utictactoe.controllers', [])
 
   .controller('AllGamesCtrl', [
     '$scope',
     'angularFire',
-    function($scope, angularFire) {
+    '$cookies',
+    function($scope, angularFire, $cookies) {
+
+      var ref = new Firebase('https://utictactoe.firebaseio.com/players');
+      if (typeof($cookies.playerId) === 'undefined') {
+        var playerId = ref.push({
+          wins: 0,
+          losses: 0,
+          ties: 0,
+          inProgress: null
+        })
+        $cookies.playerId = playerId.name();
+      }
+
+      console.log($scope.players)
+
+      $scope.cookies = function() {
+        console.log('cookie:', $cookies);
+        console.log($cookies.playerId);
+      }
+
+      // $scope.cookies();
 
       $scope.newgame = function() {
         var playerId = 1;
@@ -29,8 +51,8 @@ angular.module('utictactoe.controllers', [])
             return null;
           }
         });
-      }
-  }])
+      };
+    }])
 
   .controller('GameCtrl', [
   	'$scope',
@@ -53,74 +75,75 @@ angular.module('utictactoe.controllers', [])
 
         // This section should only be enabled when testing the application.
         // It allows play in one window.
-        // if ($scope.gameboard.enabled.indexOf(i) != -1) {
-        //   if (turnTest) {
-        //     $scope.gameboard.spaces[i] = 'X';
-        //   } else {
-        //     $scope.gameboard.spaces[i] = 'O';
-        //   }
-        //   if ($scope.gameboard.moves[0] === -1) {
-        //     $scope.gameboard.moves[0] = i;
-        //   } else {
-        //     $scope.gameboard.moves.push(i);
-        //   }
-
-        //   $scope.checkSector(i);
-        //   if ($scope.gameboard.moves.length >= 18) {
-        //     $scope.checkWin();
-        //     if ($scope.gameboard.winner === true) {
-        //       alert('X Wins!');
-        //     } else if ($scope.gameboard.winner === false) {
-        //       alert('O Wins!')
-        //     } else if ($scope.gameboard.moves.length === 81) {
-        //       alert('It\'s a tie!')
-        //     }
-        //   }
-
-        //   $scope.gameboard.enabled = [];
-        //   $scope.showEnabledSectors(i);
-        //   $scope.setEnabled(i);
-        //   turnTest = !turnTest;
-        // }
-
-
-
-
-
-
-        // The real code
-        if (turn === $scope.gameboard.turn) {
-          if ($scope.gameboard.enabled.indexOf(i) != -1) {
-            if ($scope.gameboard.turn) {
-              $scope.gameboard.spaces[i] = 'X';
-            } else {
-              $scope.gameboard.spaces[i] = 'O';
-            }
-            if ($scope.gameboard.moves[0] === -1) {
-              $scope.gameboard.moves[0] = i;
-            } else {
-              $scope.gameboard.moves.push(i);
-            }
-
-            $scope.checkSector(i);
-            if ($scope.gameboard.moves.length >= 18) {
-              $scope.checkWin();
-              if ($scope.gameboard.winner === true) {
-                alert('X Wins!');
-              } else if ($scope.gameboard.winner === false) {
-                alert('O Wins!')
-              } else if ($scope.gameboard.moves.length === 81) {
-                alert('It\'s a tie!')
-              }
-            }
-
-            $scope.gameboard.enabled = [];
-            $scope.showEnabledSectors(i);
-            $scope.setEnabled(i);
-            $scope.gameboard.turn = !$scope.gameboard.turn;
+        if ($scope.gameboard.enabled.indexOf(i) != -1) {
+          if (turnTest) {
+            $scope.gameboard.spaces[i] = 'X';
+          } else {
+            $scope.gameboard.spaces[i] = 'O';
           }
+          if ($scope.gameboard.moves[0] === -1) {
+            $scope.gameboard.moves[0] = i;
+          } else {
+            $scope.gameboard.moves.push(i);
+          }
+
+          $scope.checkSector(i);
+          if ($scope.gameboard.moves.length >= 18) {
+            $scope.checkWin();
+            if ($scope.gameboard.winner === true) {
+              alert('X Wins!');
+            } else if ($scope.gameboard.winner === false) {
+              alert('O Wins!')
+            } else if ($scope.gameboard.moves.length === 81) {
+              alert('It\'s a tie!')
+            }
+          }
+
+          $scope.gameboard.enabled = [];
+          $scope.showEnabledSectors(i);
+          $scope.setEnabled(i);
+          turnTest = !turnTest;
         }
-      };
+        };
+
+
+
+
+
+
+      //   // The real code
+      //   if (turn === $scope.gameboard.turn) {
+      //     if ($scope.gameboard.enabled.indexOf(i) != -1) {
+      //       if ($scope.gameboard.turn) {
+      //         $scope.gameboard.spaces[i] = 'X';
+      //       } else {
+      //         $scope.gameboard.spaces[i] = 'O';
+      //       }
+      //       if ($scope.gameboard.moves[0] === -1) {
+      //         $scope.gameboard.moves[0] = i;
+      //       } else {
+      //         $scope.gameboard.moves.push(i);
+      //       }
+
+      //       $scope.checkSector(i);
+      //       if ($scope.gameboard.moves.length >= 18) {
+      //         $scope.checkWin();
+      //         if ($scope.gameboard.winner === true) {
+      //           alert('X Wins!');
+      //         } else if ($scope.gameboard.winner === false) {
+      //           alert('O Wins!')
+      //         } else if ($scope.gameboard.moves.length === 81) {
+      //           alert('It\'s a tie!')
+      //         }
+      //       }
+
+      //       $scope.gameboard.enabled = [];
+      //       $scope.showEnabledSectors(i);
+      //       $scope.setEnabled(i);
+      //       $scope.gameboard.turn = !$scope.gameboard.turn;
+      //     }
+      //   }
+      // };
 
 
       $scope.checkWin = function() {
