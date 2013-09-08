@@ -32,18 +32,12 @@ angular.module('utictactoe.controllers', [])
         }
       });
 
-
-      $scope.cookies = function() {
-        console.log('cookie:', $cookies);
-        console.log($cookies.playerId);
-      }
-
-      // $scope.cookies();
-
       $scope.newgame = function() {
-        var playerId = 1;
+        var playerId = $cookies.playerId;
         var ref = new Firebase('https://utictactoe.firebaseio.com/queue');
         ref.transaction(function(currentData) {
+          // currentData refers to any data that is stored at the ref location
+          // if no one is in the queue, firebase deletes 'queue' from the database entirely.
           if (currentData === null) {
             var game = ref.parent().child('games').push({
               player1: playerId
@@ -56,6 +50,7 @@ angular.module('utictactoe.controllers', [])
         });
       };
     }])
+
 
   .controller('GameCtrl', [
   	'$scope',
