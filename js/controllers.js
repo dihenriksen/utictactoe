@@ -18,17 +18,20 @@ angular.module('utictactoe.controllers', [])
     function($scope, angularFire, $cookies) {
 
       var ref = new Firebase('https://utictactoe.firebaseio.com/players');
-      if (typeof($cookies.playerId) === 'undefined') {
-        var playerId = ref.push({
-          wins: 0,
-          losses: 0,
-          ties: 0,
-          inProgress: null
-        })
-        $cookies.playerId = playerId.name();
-      }
+      var promise = angularFire(ref, $scope, 'players', {});
 
-      console.log($scope.players)
+      promise.then(function() {
+        if (typeof($cookies.playerId) === 'undefined') {
+          var playerId = ref.push({
+            wins: 0,
+            losses: 0,
+            ties: 0,
+            inProgress: null
+          });
+          $cookies.playerId = playerId.name();
+        }
+      });
+
 
       $scope.cookies = function() {
         console.log('cookie:', $cookies);
