@@ -17,12 +17,12 @@ angular.module('utictactoe.controllers', [])
     '$cookies',
     function($scope, angularFire, $cookies) {
       var test = 0;
-
       var ref = new Firebase('https://utictactoe.firebaseio.com/players');
       var promise = angularFire(ref, $scope, 'players', {});
 
       promise.then(function() {
         if (typeof($cookies.playerId) === 'undefined') {
+          // playerId created uniquely by Firebase as a consequence of the push command
           var playerId = ref.push({
             wins: 0,
             losses: 0,
@@ -78,17 +78,23 @@ angular.module('utictactoe.controllers', [])
         var ref = new Firebase('https://utictactoe.firebaseio.com/queue');
 
         ref.once('value', function(data) {
-          if (data.val() === null) {
-            var gamename = ref.parent().child('games').push({
-              player1: playerId
-            })
-            ref.set(gamename.name());
-          } else {
-            game = data.val();
-            ref.remove();
-            ref.parent().child('games').child(game).child('player2').set(playerId);
+          console.log($cookies.inProgress);
+          console.log(typeof($cookies.inProgress));
+          if ($cookies.inProgress === 'none'){
+            if (data.val() === null) {
+              var gamename = ref.parent().child('games').push({
+                player1: playerId
+              })
+              ref.set(gamename.name());
+              $cookies.inProgress = gamename.name();
+            } else {
+              game = data.val();
+              ref.remove();
+              ref.parent().child('games').child(game).child('player2').set(playerId);
+              $cookies.inProgress = game;
+            }
           }
-        })
+        });
 
         // ref.transaction(function(currentData) {
         //   if (currentData === null && isdone === false) {
@@ -375,6 +381,8 @@ angular.module('utictactoe.controllers', [])
         $scope.gameboard.enabled = [-1];
         $scope.gameboard.disabledSects[0] = true;$scope.gameboard.disabledSects[1] = true;$scope.gameboard.disabledSects[2] = true;$scope.gameboard.disabledSects[3] = true;$scope.gameboard.disabledSects[4] = true;$scope.gameboard.disabledSects[5] = true;$scope.gameboard.disabledSects[6] = true;$scope.gameboard.disabledSects[7] = true;$scope.gameboard.disabledSects[8] = true;
         $scope.gameboard.inProgress = false;
+        $cookies.inProgress = 'none';
+        console.log($cookies.inProgress);
       }
 
 
