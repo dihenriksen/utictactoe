@@ -16,6 +16,7 @@ angular.module('utictactoe.controllers', [])
     'angularFire',
     '$cookies',
     function($scope, angularFire, $cookies) {
+      var test = 0;
 
       var ref = new Firebase('https://utictactoe.firebaseio.com/players');
       var promise = angularFire(ref, $scope, 'players', {});
@@ -32,22 +33,82 @@ angular.module('utictactoe.controllers', [])
         }
       });
 
-      $scope.newgame = function() {
+
+      $scope.startGame = function(game) {
+
+        console.log('starting game');
+        // the 'moves' array stores which spaces have been played in
+        $scope.gameboard.moves = [-1];
+
+        // turn = true means it is X's turn
+        // turn = false means it is O's turn
+        $scope.gameboard.turn = true;
+
+        // spaces array stores an X, O, or empty string for each space
+        $scope.gameboard.spaces = [];
+        for (var i = 0; i <= 88; i++) {
+          $scope.gameboard.spaces[i] = '';
+        }
+
+        // stores which spaces a player may play in
+        $scope.gameboard.enabled = [];
+        for (var i = 0; i <= 88; i++) {
+              $scope.gameboard.enabled.push(i);
+            }
+
+        // for controlling the css of enabled and disabled sectors
+        $scope.gameboard.disabledSects = [];
+        $scope.gameboard.disabledSects[0] = 'all';$scope.gameboard.disabledSects[1] = 'all';$scope.gameboard.disabledSects[2] = 'all';$scope.gameboard.disabledSects[3] = 'all';$scope.gameboard.disabledSects[4] = 'all';$scope.gameboard.disabledSects[5] = 'all';$scope.gameboard.disabledSects[6] = 'all';$scope.gameboard.disabledSects[7] = 'all';$scope.gameboard.disabledSects[8] = 'all';
+
+        $scope.gameboard.result = ['','','','','','','','',''];
+
+        $scope.gameboard.xshow = [false, false, false, false, false, false, false, false, false];
+        $scope.gameboard.oshow = [false, false, false, false, false, false, false, false, false];
+
+        $scope.gameboard.winner = null;
+
+        $scope.gameboard.inProgress = true;
+      }
+
+
+      $scope.new = function() {
+        var game = null;
+        var isdone = false;
         var playerId = $cookies.playerId;
         var ref = new Firebase('https://utictactoe.firebaseio.com/queue');
-        ref.transaction(function(currentData) {
-          // currentData refers to any data that is stored at the ref location
-          // if no one is in the queue, firebase deletes 'queue' from the database entirely.
-          if (currentData === null) {
-            var game = ref.parent().child('games').push({
+
+        ref.once('value', function(data) {
+          if (data.val() === null) {
+            var gamename = ref.parent().child('games').push({
               player1: playerId
             })
-            return game.name();
+            ref.set(gamename.name());
           } else {
-            ref.parent().child('games').child(currentData).child('player2').set(playerId);
-            return null;
+            game = data.val();
+            ref.remove();
+            ref.parent().child('games').child(game).child('player2').set(playerId);
           }
-        });
+        })
+
+        // ref.transaction(function(currentData) {
+        //   if (currentData === null && isdone === false) {
+        //     console.log(null);
+        //     var gamename = ref.parent().child('games').push({
+        //       player1: playerId
+        //     })
+        //     isdone = true;
+        //     return gamename.name();
+        //   } else {
+        //     console.log('not null');
+        //     game = currentData;
+        //     isdone = true;
+        //     return []
+        //   }
+        // });
+
+        if (game !== null) {
+          $scope.startGame(game);
+        }
       };
     }])
 
