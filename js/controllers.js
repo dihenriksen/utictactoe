@@ -36,9 +36,11 @@ angular.module('utictactoe.controllers', [])
 
       $scope.startGame = function(game) {
 
-        console.log('starting game');
+        ref = new Firebase('https://utictactoe.firebaseio.com/games');
+        console.log(game);
         // the 'moves' array stores which spaces have been played in
         $scope.gameboard.moves = [-1];
+        ref.child(game).moves = [-1];
 
         // turn = true means it is X's turn
         // turn = false means it is O's turn
@@ -78,8 +80,6 @@ angular.module('utictactoe.controllers', [])
         var ref = new Firebase('https://utictactoe.firebaseio.com/queue');
 
         ref.once('value', function(data) {
-          console.log($cookies.inProgress);
-          console.log(typeof($cookies.inProgress));
           if ($cookies.inProgress === 'none'){
             if (data.val() === null) {
               var gamename = ref.parent().child('games').push({
@@ -92,6 +92,7 @@ angular.module('utictactoe.controllers', [])
               ref.remove();
               ref.parent().child('games').child(game).child('player2').set(playerId);
               $cookies.inProgress = game;
+              $scope.startGame(game);
             }
           }
         });
@@ -112,9 +113,6 @@ angular.module('utictactoe.controllers', [])
         //   }
         // });
 
-        if (game !== null) {
-          $scope.startGame(game);
-        }
       };
     }])
 
@@ -382,7 +380,6 @@ angular.module('utictactoe.controllers', [])
         $scope.gameboard.disabledSects[0] = true;$scope.gameboard.disabledSects[1] = true;$scope.gameboard.disabledSects[2] = true;$scope.gameboard.disabledSects[3] = true;$scope.gameboard.disabledSects[4] = true;$scope.gameboard.disabledSects[5] = true;$scope.gameboard.disabledSects[6] = true;$scope.gameboard.disabledSects[7] = true;$scope.gameboard.disabledSects[8] = true;
         $scope.gameboard.inProgress = false;
         $cookies.inProgress = 'none';
-        console.log($cookies.inProgress);
       }
 
 
