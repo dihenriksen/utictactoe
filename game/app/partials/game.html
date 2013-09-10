@@ -146,9 +146,9 @@
       </div>
     </div>
 
-    <button class='btn btn-info' data-ng-hide='gameboard.inProgress' data-ng-click='startGame()'>New Game</button>
+    <button class='btn btn-info' data-ng-hide='gameboard.inProgress' data-ng-click='new()'>New Game</button>
     <button class='btn btn-info' data-ng-click='new()'>Join Queue</button>
-    <button class='btn btn-danger' data-ng-show='gameboard.inProgress' data-ng-click='resign()'>Resign</button>
+    <button class='btn btn-danger' data-ng-show='gameboard.inProgress' data-ng-click='resign(game)'>Resign</button>
     <button class='btn btn-info' data-ng-hide='gameboard.inProgress' data-ng-click='challengeFriend()'>Play a Friend</button>
     <a href="#/rules"><button class='btn btn-info' data-ng-click='rules()'>Rules</button></a>
     <div id='turnInfo'>
