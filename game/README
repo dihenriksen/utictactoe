@@ -1,1 +1,8 @@
 Repository ultimatetictactoe
+
+known issues
+gameplay updates previous games in addition to current game.
+
+sometimes gameboard data not created within game.
+
+when one player resigns, the other is not alerted.
