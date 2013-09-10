@@ -51,14 +51,11 @@ angular.module('utictactoe.controllers', [])
         promise.then(function() {
           $scope.$watch('gameboard');
           gamescope = $scope;
+          if (gamescope.gameboard.inProgress === false) {
+            alert('You won');
+            $cookies.inProgress = 'none';
+          }
         })
-      }
-
-      if (gamescope !== null) {
-        if (gamescope.gameboard.inProgress === false) {
-          alert('You won');
-          $cookies.inProgress = 'none';
-        }
       }
 
       var turn = null;
