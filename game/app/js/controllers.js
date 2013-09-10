@@ -41,15 +41,10 @@ angular.module('utictactoe.controllers', [])
   	'angularFire',
     '$cookies',
   	function($scope, angularFire, $cookies) {
-
-      var gamescope = null;
-
       var game = null;
-      if (typeof($cookies.inProgress) !== 'undefined' || $cookies.inProgress !== 'none') {
+      if (typeof($cookies.inProgress) !== 'undefined' && $cookies.inProgress !== 'none') {
         game = $cookies.inProgress;
       }
-
-      console.log(game);
 
       var turn = null;
       var turnTest = true; //for testing purposes only
@@ -57,83 +52,84 @@ angular.module('utictactoe.controllers', [])
       //mySer.obj = $scope.gameboard
       // This function makes a move on the board.
   		$scope.spaceSelect = function(i) {
-        if (turn === null && $scope.gameboard.moves[0] === -1) {
-          turn = true;
-        } else if (turn === null) {
-          turn = false;
-        }
 
         // This section should only be enabled when testing the application.
         // It allows play in one window.
-        if ($scope.gameboard.enabled.indexOf(i) != -1) {
-          if (turnTest) {
-            $scope.gameboard.spaces[i] = 'X';
-          } else {
-            $scope.gameboard.spaces[i] = 'O';
-          }
-          if ($scope.gameboard.moves[0] === -1) {
-            $scope.gameboard.moves[0] = i;
-          } else {
-            $scope.gameboard.moves.push(i);
-          }
-
-          $scope.checkSector(i);
-          if ($scope.gameboard.moves.length >= 18) {
-            $scope.checkWin();
-            if ($scope.gameboard.winner === true) {
-              alert('X Wins!');
-            } else if ($scope.gameboard.winner === false) {
-              alert('O Wins!')
-            } else if ($scope.gameboard.moves.length === 81) {
-              alert('It\'s a tie!')
-            }
-          }
-
-          $scope.gameboard.enabled = [];
-          $scope.showEnabledSectors(i);
-          $scope.setEnabled(i);
-          turnTest = !turnTest;
-        }
-      };
-
-
-
-
-
-
-      //   // The real code
-      //   if (turn === $scope.gameboard.turn) {
-      //     if ($scope.gameboard.enabled.indexOf(i) != -1) {
-      //       if ($scope.gameboard.turn) {
-      //         $scope.gameboard.spaces[i] = 'X';
-      //       } else {
-      //         $scope.gameboard.spaces[i] = 'O';
-      //       }
-      //       if ($scope.gameboard.moves[0] === -1) {
-      //         $scope.gameboard.moves[0] = i;
-      //       } else {
-      //         $scope.gameboard.moves.push(i);
-      //       }
-
-      //       $scope.checkSector(i);
-      //       if ($scope.gameboard.moves.length >= 18) {
-      //         $scope.checkWin();
-      //         if ($scope.gameboard.winner === true) {
-      //           alert('X Wins!');
-      //         } else if ($scope.gameboard.winner === false) {
-      //           alert('O Wins!')
-      //         } else if ($scope.gameboard.moves.length === 81) {
-      //           alert('It\'s a tie!')
-      //         }
-      //       }
-
-      //       $scope.gameboard.enabled = [];
-      //       $scope.showEnabledSectors(i);
-      //       $scope.setEnabled(i);
-      //       $scope.gameboard.turn = !$scope.gameboard.turn;
+      //   if ($scope.gameboard.enabled.indexOf(i) != -1) {
+      //     if (turnTest) {
+      //       $scope.gameboard.spaces[i] = 'X';
+      //     } else {
+      //       $scope.gameboard.spaces[i] = 'O';
       //     }
+      //     if ($scope.gameboard.moves[0] === -1) {
+      //       $scope.gameboard.moves[0] = i;
+      //     } else {
+      //       $scope.gameboard.moves.push(i);
+      //     }
+
+      //     $scope.checkSector(i);
+      //     if ($scope.gameboard.moves.length >= 18) {
+      //       $scope.checkWin();
+      //       if ($scope.gameboard.winner === true) {
+      //         alert('X Wins!');
+      //       } else if ($scope.gameboard.winner === false) {
+      //         alert('O Wins!')
+      //       } else if ($scope.gameboard.moves.length === 81) {
+      //         alert('It\'s a tie!')
+      //       }
+      //     }
+
+      //     $scope.gameboard.enabled = [];
+      //     $scope.showEnabledSectors(i);
+      //     $scope.setEnabled(i);
+      //     turnTest = !turnTest;
       //   }
       // };
+
+
+
+
+
+
+        // The real code
+        if ($cookies.turn === 'X') {
+          turn = true;
+        } else if ($cookies.turn === 'O') {
+          turn = false;
+        }
+
+        if (turn === $scope.gameboard.turn) {
+          if ($scope.gameboard.enabled.indexOf(i) != -1) {
+            if ($scope.gameboard.turn) {
+              $scope.gameboard.spaces[i] = 'X';
+            } else {
+              $scope.gameboard.spaces[i] = 'O';
+            }
+            if ($scope.gameboard.moves[0] === -1) {
+              $scope.gameboard.moves[0] = i;
+            } else {
+              $scope.gameboard.moves.push(i);
+            }
+
+            $scope.checkSector(i);
+            if ($scope.gameboard.moves.length >= 18) {
+              $scope.checkWin();
+              if ($scope.gameboard.winner === true) {
+                alert('X Wins!');
+              } else if ($scope.gameboard.winner === false) {
+                alert('O Wins!');
+              } else if ($scope.gameboard.moves.length === 81) {
+                alert('It\'s a tie!');
+              }
+            }
+
+            $scope.gameboard.enabled = [];
+            $scope.showEnabledSectors(i);
+            $scope.setEnabled(i);
+            $scope.gameboard.turn = !$scope.gameboard.turn;
+          }
+        }
+      };
 
 
       $scope.checkWin = function() {
@@ -317,13 +313,13 @@ angular.module('utictactoe.controllers', [])
       $scope.startGame = function(game) {
         var ref = new Firebase('https://utictactoe.firebaseio.com/games/' + game + '/gameboard')
         var promise = angularFire(ref, $scope, 'gameboard', {});
-        gamescope = $scope;
 
         promise.then(function() {
           $scope.$watch('gameboard');
           $scope.setNewBoard(game);
         })
       }
+
 
       $scope.setNewBoard = function(game) {
         // the 'moves' array stores which spaces have been played in
@@ -348,12 +344,9 @@ angular.module('utictactoe.controllers', [])
         $scope.gameboard.disabledSects[0] = 'all';$scope.gameboard.disabledSects[1] = 'all';$scope.gameboard.disabledSects[2] = 'all';$scope.gameboard.disabledSects[3] = 'all';$scope.gameboard.disabledSects[4] = 'all';$scope.gameboard.disabledSects[5] = 'all';$scope.gameboard.disabledSects[6] = 'all';$scope.gameboard.disabledSects[7] = 'all';$scope.gameboard.disabledSects[8] = 'all';
 
         $scope.gameboard.result = ['','','','','','','','',''];
-
         $scope.gameboard.xshow = [false, false, false, false, false, false, false, false, false];
         $scope.gameboard.oshow = [false, false, false, false, false, false, false, false, false];
-
         $scope.gameboard.winner = null;
-
         $scope.gameboard.inProgress = true;
       }
 
@@ -370,11 +363,13 @@ angular.module('utictactoe.controllers', [])
                 player1: playerId
               })
               ref.set(gamename.name());
+              $cookies.turn = 'X';
               $cookies.inProgress = gamename.name();
             } else {
               game = data.val();
               ref.remove();
               ref.parent().child('games').child(game).child('player2').set(playerId);
+              $cookies.turn = 'O';
               $cookies.inProgress = game;
               $scope.startGame(game);
             }
