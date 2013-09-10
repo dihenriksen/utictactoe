@@ -21,6 +21,8 @@ angular.module('utictactoe.controllers', [])
       var promise = angularFire(ref, $scope, 'players', {});
 
       promise.then(function() {
+
+
         if (typeof($cookies.playerId) === 'undefined') {
           // playerId created uniquely by Firebase as a consequence of the push command
           var playerId = ref.push({
@@ -37,10 +39,9 @@ angular.module('utictactoe.controllers', [])
       $scope.startGame = function(game) {
 
         ref = new Firebase('https://utictactoe.firebaseio.com/games');
-        console.log(game);
+        //$scope.games.gameboard = myServ.obj
         // the 'moves' array stores which spaces have been played in
         $scope.gameboard.moves = [-1];
-        ref.child(game).moves = [-1];
 
         // turn = true means it is X's turn
         // turn = false means it is O's turn
@@ -127,7 +128,7 @@ angular.module('utictactoe.controllers', [])
       var turn = null;
       var turnTest = true; //for testing purposes only
 
-
+      //mySer.obj = $scope.gameboard
       // This function makes a move on the board.
   		$scope.spaceSelect = function(i) {
         if (turn === null && $scope.gameboard.moves[0] === -1) {
