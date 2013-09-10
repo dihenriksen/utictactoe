@@ -41,6 +41,7 @@ angular.module('utictactoe.controllers', [])
   	'angularFire',
     '$cookies',
   	function($scope, angularFire, $cookies) {
+      var gamescope = null;
       var game = null;
       if (typeof($cookies.inProgress) !== 'undefined' && $cookies.inProgress !== 'none') {
         game = $cookies.inProgress;
@@ -49,7 +50,15 @@ angular.module('utictactoe.controllers', [])
 
         promise.then(function() {
           $scope.$watch('gameboard');
+          gamescope = $scope;
         })
+      }
+
+      if (gamescope !== null) {
+        if (gamescope.gameboard.inProgress === false) {
+          alert('You won');
+          $cookies.inProgress = 'none';
+        }
       }
 
       var turn = null;
@@ -104,7 +113,7 @@ angular.module('utictactoe.controllers', [])
           turn = false;
         }
 
-        if (turn === $scope.gameboard.turn) {
+        if (turn === gamescope.gameboard.turn) {
           if ($scope.gameboard.enabled.indexOf(i) != -1) {
             if ($scope.gameboard.turn) {
               $scope.gameboard.spaces[i] = 'X';
@@ -317,19 +326,35 @@ angular.module('utictactoe.controllers', [])
 
       //reset conditions for a new game
       $scope.startGame = function(game) {
+        console.log('startgame');
         var ref = new Firebase('https://utictactoe.firebaseio.com/games/' + game + '/gameboard')
         var promise = angularFire(ref, $scope, 'gameboard', {});
 
         promise.then(function() {
           $scope.$watch('gameboard');
+          gamescope = $scope;
           $scope.setNewBoard(game);
         })
       }
 
 
+      $scope.startGame1 = function(game) {
+        console.log('startGame1');
+        var ref = new Firebase('https://utictactoe.firebaseio.com/games/' + game + '/gameboard')
+        var promise = angularFire(ref, $scope, 'gameboard', {});
+
+        promise.then(function() {
+          $scope.$watch('gameboard');
+          gamescope = $scope;
+        })
+      }
+
+
       $scope.setNewBoard = function(game) {
+        console.log('setNewBoard');
         // the 'moves' array stores which spaces have been played in
         $scope.gameboard.moves = [-1];
+        console.log($scope.gameboard);
 
         // turn = true means it is X's turn
         // turn = false means it is O's turn
@@ -358,19 +383,22 @@ angular.module('utictactoe.controllers', [])
 
 
       $scope.new = function() {
-        var isdone = false;
+        console.log('new');
         var playerId = $cookies.playerId;
         var ref = new Firebase('https://utictactoe.firebaseio.com/queue');
 
         ref.once('value', function(data) {
-          if ($cookies.inProgress === 'none'){
+          console.log(typeof($cookies.inProgress));
+          if ($cookies.inProgress === 'none' || typeof($cookies.inProgress) === 'undefined'){
             if (data.val() === null) {
               var gamename = ref.parent().child('games').push({
                 player1: playerId
               })
+              console.log('added to queue');
               ref.set(gamename.name());
               $cookies.turn = 'X';
               $cookies.inProgress = gamename.name();
+              $scope.startGame1(game);
             } else {
               game = data.val();
               ref.remove();
@@ -384,5 +412,10 @@ angular.module('utictactoe.controllers', [])
       }
   	}])
 
+  .controller('RulesCtrl', [
+    '$scope',
+    function(){
+
+    }])
 
 
