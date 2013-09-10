@@ -22,7 +22,6 @@ angular.module('utictactoe.controllers', [])
 
       promise.then(function() {
 
-
         if (typeof($cookies.playerId) === 'undefined') {
           // playerId created uniquely by Firebase as a consequence of the push command
           var playerId = ref.push({
@@ -123,8 +122,16 @@ angular.module('utictactoe.controllers', [])
   	'angularFire',
     '$cookies',
   	function($scope, angularFire, $cookies) {
-  		var ref = 'http://utictactoe.firebaseio.com/gameboard';
-  		var promise = angularFire(ref, $scope, 'gameboard', {});
+
+      var gamescope = null;
+
+      var game = null;
+      if (typeof($cookies.inProgress) !== 'undefined' || $cookies.inProgress !== 'none') {
+        game = $cookies.inProgress;
+      }
+
+      console.log(game);
+
       var turn = null;
       var turnTest = true; //for testing purposes only
 
@@ -168,7 +175,7 @@ angular.module('utictactoe.controllers', [])
           $scope.setEnabled(i);
           turnTest = !turnTest;
         }
-        };
+      };
 
 
 
@@ -318,6 +325,7 @@ angular.module('utictactoe.controllers', [])
         }
       }
 
+
       $scope.filledSector = function() {
         // This function is for use when a player is sent to a
         // sector that is already full.
@@ -332,6 +340,7 @@ angular.module('utictactoe.controllers', [])
         $scope.gameboard.disabledSects[0] = 'all';$scope.gameboard.disabledSects[1] = 'all';$scope.gameboard.disabledSects[2] = 'all';$scope.gameboard.disabledSects[3] = 'all';$scope.gameboard.disabledSects[4] = 'all';$scope.gameboard.disabledSects[5] = 'all';$scope.gameboard.disabledSects[6] = 'all';$scope.gameboard.disabledSects[7] = 'all';$scope.gameboard.disabledSects[8] = 'all';
         return arr;
       }
+
 
       // enable proper sectors after a turn
       $scope.showEnabledSectors = function(i) {
@@ -366,13 +375,14 @@ angular.module('utictactoe.controllers', [])
         }
       }
 
+
       $scope.turnDisplay = function() {
         console.log('Inside turnDisplay');
         $scope.turnInfo = 'Your turn';
       }
 
 
-      $scope.resign = function() {
+      $scope.resign = function(game) {
         if (($scope.gameboard.winner = !$scope.gameboard.turn) === true) {
           alert('X Wins!');
         } else { alert('O Wins!') }
@@ -385,7 +395,18 @@ angular.module('utictactoe.controllers', [])
 
 
       //reset conditions for a new game
-      $scope.newgame = function() {
+      $scope.startGame = function(game) {
+        var ref = new Firebase('https://utictactoe.firebaseio.com/games/' + game + '/gameboard')
+        var promise = angularFire(ref, $scope, 'gameboard', {});
+        gamescope = $scope;
+
+        promise.then(function() {
+          $scope.$watch('gameboard');
+          $scope.setNewBoard(game);
+        })
+      }
+
+      $scope.setNewBoard = function(game) {
         // the 'moves' array stores which spaces have been played in
         $scope.gameboard.moves = [-1];
 
@@ -417,18 +438,31 @@ angular.module('utictactoe.controllers', [])
         $scope.gameboard.inProgress = true;
       }
 
-  		promise.then(function() {
-  			$scope.$watch('gameboard');
-        // $cookies.username = 'Damien';
-        // $cookies.turn = true;
-        // console.log($cookies);
-  		});
+
+      $scope.new = function() {
+        var isdone = false;
+        var playerId = $cookies.playerId;
+        var ref = new Firebase('https://utictactoe.firebaseio.com/queue');
+
+        ref.once('value', function(data) {
+          if ($cookies.inProgress === 'none'){
+            if (data.val() === null) {
+              var gamename = ref.parent().child('games').push({
+                player1: playerId
+              })
+              ref.set(gamename.name());
+              $cookies.inProgress = gamename.name();
+            } else {
+              game = data.val();
+              ref.remove();
+              ref.parent().child('games').child(game).child('player2').set(playerId);
+              $cookies.inProgress = game;
+              $scope.startGame(game);
+            }
+          }
+        });
+      }
   	}])
-
-  .controller('RulesCtrl', [
-    function() {
-
-    }])
 
 
 
