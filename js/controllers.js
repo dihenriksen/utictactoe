@@ -44,6 +44,12 @@ angular.module('utictactoe.controllers', [])
       var game = null;
       if (typeof($cookies.inProgress) !== 'undefined' && $cookies.inProgress !== 'none') {
         game = $cookies.inProgress;
+        var ref = new Firebase('https://utictactoe.firebaseio.com/games/' + game + '/gameboard')
+        var promise = angularFire(ref, $scope, 'gameboard', {});
+
+        promise.then(function() {
+          $scope.$watch('gameboard');
+        })
       }
 
       var turn = null;
