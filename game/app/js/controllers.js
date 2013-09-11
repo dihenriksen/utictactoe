@@ -415,7 +415,7 @@ angular.module('utictactoe.controllers', [])
                 player1: playerId
               })
               ref.set(gamename.name());
-              $cookieStore.put('turn', true
+              $cookieStore.put('turn', true);
               $cookieStore.put('inProgress',gamename.name());
               game = gamename.name();
               $scope.startGame1(game);
