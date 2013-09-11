@@ -15,6 +15,7 @@ angular.module('utictactoe.controllers', [])
     '$scope',
     'angularFire',
     '$cookies',
+    '$cookieStore',
     function($scope, angularFire, $cookies) {
       var test = 0;
       var ref = new Firebase('https://utictactoe.firebaseio.com/players');
@@ -40,12 +41,14 @@ angular.module('utictactoe.controllers', [])
   	'$scope',
   	'angularFire',
     '$cookies',
-  	function($scope, angularFire, $cookies) {
+    '$cookieStore',
+  	function($scope, angularFire, $cookies, $cookieStore) {
       var gamescope = null;
       var game = null;
-      if (typeof($cookies.inProgress) !== 'undefined' && $cookies.inProgress !== 'none') {
-        game = $cookies.inProgress;
-        var ref = new Firebase('https://utictactoe.firebaseio.com/games/' + game + '/gameboard')
+
+      if (typeof($cookies['inProgress']) !== 'undefined' && $cookies['inProgress'] !== 'none') {
+        game = $cookies['inProgress'];
+        var ref = new Firebase('https://utictactoe.firebaseio.com/games/' + game + '/gameboard');
         var promise = angularFire(ref, $scope, 'gameboard', {});
 
         promise.then(function() {
@@ -53,7 +56,7 @@ angular.module('utictactoe.controllers', [])
           gamescope = $scope;
           if (gamescope.gameboard.inProgress === false) {
             alert('You won');
-            $cookies.inProgress = 'none';
+            $cookieStore.remove('inProgress');
           }
         })
       }
@@ -61,9 +64,14 @@ angular.module('utictactoe.controllers', [])
       var turn = null;
       var turnTest = true; //for testing purposes only
 
+      $scope.doesitclick = function(i) {
+        console.log('yes',i);
+      }
+
       //mySer.obj = $scope.gameboard
       // This function makes a move on the board.
   		$scope.spaceSelect = function(i) {
+        console.log('inside spaceSelect');
 
         // This section should only be enabled when testing the application.
         // It allows play in one window.
@@ -104,9 +112,11 @@ angular.module('utictactoe.controllers', [])
 
 
         // The real code
-        if ($cookies.turn === 'X') {
+        if ($cookies['turn'] === 'true') {
+          console.log('turn =' + true);
           turn = true;
-        } else if ($cookies.turn === 'O') {
+        } else if ($cookies['turn'] === 'false') {
+          console.log('turn =' + false);
           turn = false;
         }
 
@@ -317,26 +327,25 @@ angular.module('utictactoe.controllers', [])
         $scope.gameboard.enabled = [-1];
         $scope.gameboard.disabledSects[0] = true;$scope.gameboard.disabledSects[1] = true;$scope.gameboard.disabledSects[2] = true;$scope.gameboard.disabledSects[3] = true;$scope.gameboard.disabledSects[4] = true;$scope.gameboard.disabledSects[5] = true;$scope.gameboard.disabledSects[6] = true;$scope.gameboard.disabledSects[7] = true;$scope.gameboard.disabledSects[8] = true;
         $scope.gameboard.inProgress = false;
-        $cookies.inProgress = 'none';
+        $cookieStore.remove('inProgress');
       }
 
 
       //reset conditions for a new game
       $scope.startGame = function(game) {
-        console.log('startgame');
         var ref = new Firebase('https://utictactoe.firebaseio.com/games/' + game + '/gameboard')
         var promise = angularFire(ref, $scope, 'gameboard', {});
 
         promise.then(function() {
-          $scope.$watch('gameboard');
+          $scope.gameboard.init = [1,2];
           gamescope = $scope;
+          $scope.$watch('gameboard');
           $scope.setNewBoard(game);
         })
       }
 
 
       $scope.startGame1 = function(game) {
-        console.log('startGame1');
         var ref = new Firebase('https://utictactoe.firebaseio.com/games/' + game + '/gameboard')
         var promise = angularFire(ref, $scope, 'gameboard', {});
 
@@ -348,10 +357,9 @@ angular.module('utictactoe.controllers', [])
 
 
       $scope.setNewBoard = function(game) {
-        console.log('setNewBoard');
         // the 'moves' array stores which spaces have been played in
-        $scope.gameboard.moves = [-1];
-        console.log($scope.gameboard);
+        gamescope.gameboard.moves = [-1];
+        console.log('scope:',gamescope);
 
         // turn = true means it is X's turn
         // turn = false means it is O's turn
@@ -379,29 +387,45 @@ angular.module('utictactoe.controllers', [])
       }
 
 
+      $scope.clearcookie = function() {
+        console.log($cookieStore.get('inProgress'));
+        $cookieStore.remove('inProgress');
+        $cookieStore.remove('turn');
+        console.log($cookieStore.get('inProgress'));
+      }
+
+
+      $scope.showcookie = function() {
+        console.log($cookies['inProgress']);
+        console.log($cookies['turn']);
+        console.log(typeof $cookies['turn']);
+        console.log($cookies['playerId']);
+      }
+
+
       $scope.new = function() {
-        console.log('new');
-        var playerId = $cookies.playerId;
+        var playerId = $cookies['playerId'];
         var ref = new Firebase('https://utictactoe.firebaseio.com/queue');
 
         ref.once('value', function(data) {
-          console.log(typeof($cookies.inProgress));
-          if ($cookies.inProgress === 'none' || typeof($cookies.inProgress) === 'undefined'){
+          console.log('inProgress: ' + typeof($cookieStore.get('inProgress')));
+          if ($cookieStore.get('inProgress') === 'none' || typeof($cookies.inProgress) === 'undefined') {
             if (data.val() === null) {
               var gamename = ref.parent().child('games').push({
                 player1: playerId
               })
-              console.log('added to queue');
               ref.set(gamename.name());
-              $cookies.turn = 'X';
-              $cookies.inProgress = gamename.name();
+              $cookieStore.put('turn', true
+              $cookieStore.put('inProgress',gamename.name());
+              game = gamename.name();
               $scope.startGame1(game);
             } else {
               game = data.val();
+
               ref.remove();
               ref.parent().child('games').child(game).child('player2').set(playerId);
-              $cookies.turn = 'O';
-              $cookies.inProgress = game;
+              $cookieStore.put('turn', false);
+              $cookieStore.put('inProgress',game);
               $scope.startGame(game);
             }
           }
