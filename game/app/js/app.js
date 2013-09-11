@@ -6,7 +6,8 @@ angular.module('utictactoe',
 	[
 		'firebase',
 		'utictactoe.controllers',
-		'ngCookies'
+		'ngCookies',
+		'LocalStorageModule'
 	]).
 config(['$routeProvider', function($routeProvider) {
 	$routeProvider.when('/', {templateUrl: 'partials/game.html', controller: 'GameCtrl'});
