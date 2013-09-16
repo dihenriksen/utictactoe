@@ -388,18 +388,16 @@ angular.module('utictactoe.controllers', [])
 
 
       $scope.clearcookie = function() {
-        console.log($cookieStore.get('inProgress'));
         $cookieStore.remove('inProgress');
         $cookieStore.remove('turn');
-        console.log($cookieStore.get('inProgress'));
       }
 
 
       $scope.showcookie = function() {
-        console.log($cookies['inProgress']);
-        console.log($cookies['turn']);
+        console.log('In progress: ' + $cookies['inProgress']);
+        console.log('Whose turn:' + $cookies['turn']);
         console.log(typeof $cookies['turn']);
-        console.log($cookies['playerId']);
+        console.log('This player: ' + $cookies['playerId']);
       }
 
 
