@@ -337,7 +337,6 @@ angular.module('utictactoe.controllers', [])
         var promise = angularFire(ref, $scope, 'gameboard', {});
 
         promise.then(function() {
-          $scope.gameboard.init = [1,2];
           gamescope = $scope;
           $scope.$watch('gameboard');
           $scope.setNewBoard(game);
@@ -346,11 +345,14 @@ angular.module('utictactoe.controllers', [])
 
 
       $scope.startGame1 = function(game) {
+        $scope.gameboard = {};
         var ref = new Firebase('https://utictactoe.firebaseio.com/games/' + game + '/gameboard')
-        var promise = angularFire(ref, $scope, 'gameboard', {});
+        var promise = angularFire(ref, $scope, 'gameboard', { moves: [-1]});
 
         promise.then(function() {
+          console.log(ref.toString());
           $scope.$watch('gameboard');
+          console.log($scope.gameboard);
           gamescope = $scope;
         })
       }
@@ -394,6 +396,7 @@ angular.module('utictactoe.controllers', [])
 
 
       $scope.showcookie = function() {
+        console.log('');
         console.log('In progress: ' + $cookies['inProgress']);
         console.log('Whose turn:' + $cookies['turn']);
         console.log(typeof $cookies['turn']);
