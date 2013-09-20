@@ -406,22 +406,27 @@ angular.module('utictactoe.controllers', [])
           var queue = new Firebase('https://utictactoe.firebaseio.com/queue');
 
           queue.once('value', function(data) {
-            var gamename = queue.parent().child('games').push({
-              player1: playerId
-            })
-            game = gamename.name();
-            queue.set(game);
-            // $cookieStore.put('turn', true);
-            // $cookiesStore.put('inProgress', game);
-            $scope.gameboard = {};
-            // $scope.setNewBoard(game);
-            // console.log(typeof $scope.gameboard);
-            var ref = new Firebase('https://utictactoe.firebaseio.com/games/' + game +'/gameboard');
-            angularFire(ref, $scope, 'gameboard', {}).then(function() {
-              // ref.child('moves').set([-1]);
-              $scope.setNewBoard(game);
-              console.log($scope.gameboard);
-            })
+            if (data.val() === null) {
+              game = queue.parent().child('games').push({
+                player1: playerId
+              }).name();
+              queue.set(game);
+              $scope.gameboard = {};
+              var ref = new Firebase('https://utictactoe.firebaseio.com/games/' + game + '/gameboard');
+              angularFire(ref, $scope, 'gameboard', {}).then(function() {
+                // ref.child('moves').set([-1]);
+                // $scope.setNewBoard(game);
+              })
+            } else {
+              game = data.val();
+              queue.remove();
+              queue.parent().child('games').child(game).child('player2').set(playerId);
+              $scope.gameboard = {};
+              var ref = new Firebase('https://utictactoe.firebaseio.com/games/' + game + '/gameboard');
+              angularFire(ref, $scope, 'gameboard', {}).then(function() {
+                $scope.setNewBoard(game);
+              })
+            }
           })
         }
 
