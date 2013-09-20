@@ -414,8 +414,8 @@ angular.module('utictactoe.controllers', [])
               $scope.gameboard = {};
               var ref = new Firebase('https://utictactoe.firebaseio.com/games/' + game + '/gameboard');
               angularFire(ref, $scope, 'gameboard', {}).then(function() {
-                // ref.child('moves').set([-1]);
-                // $scope.setNewBoard(game);
+                $cookieStore.put('turn', true);
+                $cookieStore.put('inProgress', game);
               })
             } else {
               game = data.val();
@@ -424,6 +424,8 @@ angular.module('utictactoe.controllers', [])
               $scope.gameboard = {};
               var ref = new Firebase('https://utictactoe.firebaseio.com/games/' + game + '/gameboard');
               angularFire(ref, $scope, 'gameboard', {}).then(function() {
+                $cookieStore.put('turn', false);
+                $cookieStore.put('inProgress', game);
                 $scope.setNewBoard(game);
               })
             }
