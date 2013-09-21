@@ -267,7 +267,7 @@ angular.module('utictactoe.controllers', [])
             arr.push(i);
           }
         }
-        $scope.gameboard.disabledSects[0] = 'all';$scope.gameboard.disabledSects[1] = 'all';$scope.gameboard.disabledSects[2] = 'all';$scope.gameboard.disabledSects[3] = 'all';$scope.gameboard.disabledSects[4] = 'all';$scope.gameboard.disabledSects[5] = 'all';$scope.gameboard.disabledSects[6] = 'all';$scope.gameboard.disabledSects[7] = 'all';$scope.gameboard.disabledSects[8] = 'all';
+        $scope.gameboard.disabledSectors[0] = 'all';$scope.gameboard.disabledSectors[1] = 'all';$scope.gameboard.disabledSectors[2] = 'all';$scope.gameboard.disabledSectors[3] = 'all';$scope.gameboard.disabledSectors[4] = 'all';$scope.gameboard.disabledSectors[5] = 'all';$scope.gameboard.disabledSectors[6] = 'all';$scope.gameboard.disabledSectors[7] = 'all';$scope.gameboard.disabledSectors[8] = 'all';
         return arr;
       }
 
@@ -276,31 +276,31 @@ angular.module('utictactoe.controllers', [])
       $scope.showEnabledSectors = function(i) {
         switch (i) {
           case 0: case 10: case 20: case 30: case 40: case 50: case 60: case 70: case 80:
-            $scope.gameboard.disabledSects[0] = false;$scope.gameboard.disabledSects[1] = true;$scope.gameboard.disabledSects[2] = true;$scope.gameboard.disabledSects[3] = true;$scope.gameboard.disabledSects[4] = true;$scope.gameboard.disabledSects[5] = true;$scope.gameboard.disabledSects[6] = true;$scope.gameboard.disabledSects[7] = true;$scope.gameboard.disabledSects[8] = true;
+            $scope.gameboard.disabledSectors[0] = false;$scope.gameboard.disabledSectors[1] = true;$scope.gameboard.disabledSectors[2] = true;$scope.gameboard.disabledSectors[3] = true;$scope.gameboard.disabledSectors[4] = true;$scope.gameboard.disabledSectors[5] = true;$scope.gameboard.disabledSectors[6] = true;$scope.gameboard.disabledSectors[7] = true;$scope.gameboard.disabledSectors[8] = true;
             break
           case 1: case 11: case 21: case 31: case 41: case 51: case 61: case 71: case 81:
-            $scope.gameboard.disabledSects[0] = true;$scope.gameboard.disabledSects[1] = false;$scope.gameboard.disabledSects[2] = true;$scope.gameboard.disabledSects[3] = true;$scope.gameboard.disabledSects[4] = true;$scope.gameboard.disabledSects[5] = true;$scope.gameboard.disabledSects[6] = true;$scope.gameboard.disabledSects[7] = true;$scope.gameboard.disabledSects[8] = true;
+            $scope.gameboard.disabledSectors[0] = true;$scope.gameboard.disabledSectors[1] = false;$scope.gameboard.disabledSectors[2] = true;$scope.gameboard.disabledSectors[3] = true;$scope.gameboard.disabledSectors[4] = true;$scope.gameboard.disabledSectors[5] = true;$scope.gameboard.disabledSectors[6] = true;$scope.gameboard.disabledSectors[7] = true;$scope.gameboard.disabledSectors[8] = true;
             break
           case 2: case 12: case 22: case 32: case 42: case 52: case 62: case 72: case 82:
-            $scope.gameboard.disabledSects[0] = true;$scope.gameboard.disabledSects[1] = true;$scope.gameboard.disabledSects[2] = false;$scope.gameboard.disabledSects[3] = true;$scope.gameboard.disabledSects[4] = true;$scope.gameboard.disabledSects[5] = true;$scope.gameboard.disabledSects[6] = true;$scope.gameboard.disabledSects[7] = true;$scope.gameboard.disabledSects[8] = true;
+            $scope.gameboard.disabledSectors[0] = true;$scope.gameboard.disabledSectors[1] = true;$scope.gameboard.disabledSectors[2] = false;$scope.gameboard.disabledSectors[3] = true;$scope.gameboard.disabledSectors[4] = true;$scope.gameboard.disabledSectors[5] = true;$scope.gameboard.disabledSectors[6] = true;$scope.gameboard.disabledSectors[7] = true;$scope.gameboard.disabledSectors[8] = true;
             break
           case 3: case 13: case 23: case 33: case 43: case 53: case 63: case 73: case 83:
-            $scope.gameboard.disabledSects[0] = true;$scope.gameboard.disabledSects[1] = true;$scope.gameboard.disabledSects[2] = true;$scope.gameboard.disabledSects[3] = false;$scope.gameboard.disabledSects[4] = true;$scope.gameboard.disabledSects[5] = true;$scope.gameboard.disabledSects[6] = true;$scope.gameboard.disabledSects[7] = true;$scope.gameboard.disabledSects[8] = true;
+            $scope.gameboard.disabledSectors[0] = true;$scope.gameboard.disabledSectors[1] = true;$scope.gameboard.disabledSectors[2] = true;$scope.gameboard.disabledSectors[3] = false;$scope.gameboard.disabledSectors[4] = true;$scope.gameboard.disabledSectors[5] = true;$scope.gameboard.disabledSectors[6] = true;$scope.gameboard.disabledSectors[7] = true;$scope.gameboard.disabledSectors[8] = true;
             break
           case 4: case 14: case 24: case 34: case 44: case 54: case 64: case 74: case 84:
-            $scope.gameboard.disabledSects[0] = true;$scope.gameboard.disabledSects[1] = true;$scope.gameboard.disabledSects[2] = true;$scope.gameboard.disabledSects[3] = true;$scope.gameboard.disabledSects[4] = false;$scope.gameboard.disabledSects[5] = true;$scope.gameboard.disabledSects[6] = true;$scope.gameboard.disabledSects[7] = true;$scope.gameboard.disabledSects[8] = true;
+            $scope.gameboard.disabledSectors[0] = true;$scope.gameboard.disabledSectors[1] = true;$scope.gameboard.disabledSectors[2] = true;$scope.gameboard.disabledSectors[3] = true;$scope.gameboard.disabledSectors[4] = false;$scope.gameboard.disabledSectors[5] = true;$scope.gameboard.disabledSectors[6] = true;$scope.gameboard.disabledSectors[7] = true;$scope.gameboard.disabledSectors[8] = true;
             break
           case 5: case 15: case 25: case 35: case 45: case 55: case 65: case 75: case 85:
-            $scope.gameboard.disabledSects[0] = true;$scope.gameboard.disabledSects[1] = true;$scope.gameboard.disabledSects[2] = true;$scope.gameboard.disabledSects[3] = true;$scope.gameboard.disabledSects[4] = true;$scope.gameboard.disabledSects[5] = false;$scope.gameboard.disabledSects[6] = true;$scope.gameboard.disabledSects[7] = true;$scope.gameboard.disabledSects[8] = true;
+            $scope.gameboard.disabledSectors[0] = true;$scope.gameboard.disabledSectors[1] = true;$scope.gameboard.disabledSectors[2] = true;$scope.gameboard.disabledSectors[3] = true;$scope.gameboard.disabledSectors[4] = true;$scope.gameboard.disabledSectors[5] = false;$scope.gameboard.disabledSectors[6] = true;$scope.gameboard.disabledSectors[7] = true;$scope.gameboard.disabledSectors[8] = true;
             break
           case 6: case 16: case 26: case 36: case 46: case 56: case 66: case 76: case 86:
-            $scope.gameboard.disabledSects[0] = true;$scope.gameboard.disabledSects[1] = true;$scope.gameboard.disabledSects[2] = true;$scope.gameboard.disabledSects[3] = true;$scope.gameboard.disabledSects[4] = true;$scope.gameboard.disabledSects[5] = true;$scope.gameboard.disabledSects[6] = false;$scope.gameboard.disabledSects[7] = true;$scope.gameboard.disabledSects[8] = true;
+            $scope.gameboard.disabledSectors[0] = true;$scope.gameboard.disabledSectors[1] = true;$scope.gameboard.disabledSectors[2] = true;$scope.gameboard.disabledSectors[3] = true;$scope.gameboard.disabledSectors[4] = true;$scope.gameboard.disabledSectors[5] = true;$scope.gameboard.disabledSectors[6] = false;$scope.gameboard.disabledSectors[7] = true;$scope.gameboard.disabledSectors[8] = true;
             break
           case 7: case 17: case 27: case 37: case 47: case 57: case 67: case 77: case 87:
-            $scope.gameboard.disabledSects[0] = true;$scope.gameboard.disabledSects[1] = true;$scope.gameboard.disabledSects[2] = true;$scope.gameboard.disabledSects[3] = true;$scope.gameboard.disabledSects[4] = true;$scope.gameboard.disabledSects[5] = true;$scope.gameboard.disabledSects[6] = true;$scope.gameboard.disabledSects[7] = false;$scope.gameboard.disabledSects[8] = true;
+            $scope.gameboard.disabledSectors[0] = true;$scope.gameboard.disabledSectors[1] = true;$scope.gameboard.disabledSectors[2] = true;$scope.gameboard.disabledSectors[3] = true;$scope.gameboard.disabledSectors[4] = true;$scope.gameboard.disabledSectors[5] = true;$scope.gameboard.disabledSectors[6] = true;$scope.gameboard.disabledSectors[7] = false;$scope.gameboard.disabledSectors[8] = true;
             break
           case 8: case 18: case 28: case 38: case 48: case 58: case 68: case 78: case 88:
-            $scope.gameboard.disabledSects[0] = true;$scope.gameboard.disabledSects[1] = true;$scope.gameboard.disabledSects[2] = true;$scope.gameboard.disabledSects[3] = true;$scope.gameboard.disabledSects[4] = true;$scope.gameboard.disabledSects[5] = true;$scope.gameboard.disabledSects[6] = true;$scope.gameboard.disabledSects[7] = true;$scope.gameboard.disabledSects[8] = false;
+            $scope.gameboard.disabledSectors[0] = true;$scope.gameboard.disabledSectors[1] = true;$scope.gameboard.disabledSectors[2] = true;$scope.gameboard.disabledSectors[3] = true;$scope.gameboard.disabledSectors[4] = true;$scope.gameboard.disabledSectors[5] = true;$scope.gameboard.disabledSectors[6] = true;$scope.gameboard.disabledSectors[7] = true;$scope.gameboard.disabledSectors[8] = false;
             break
         }
       }
@@ -318,7 +318,7 @@ angular.module('utictactoe.controllers', [])
         } else { alert('O Wins!') }
 
         $scope.gameboard.enabled = [-1];
-        $scope.gameboard.disabledSects[0] = true;$scope.gameboard.disabledSects[1] = true;$scope.gameboard.disabledSects[2] = true;$scope.gameboard.disabledSects[3] = true;$scope.gameboard.disabledSects[4] = true;$scope.gameboard.disabledSects[5] = true;$scope.gameboard.disabledSects[6] = true;$scope.gameboard.disabledSects[7] = true;$scope.gameboard.disabledSects[8] = true;
+        $scope.gameboard.disabledSectors[0] = true;$scope.gameboard.disabledSectors[1] = true;$scope.gameboard.disabledSectors[2] = true;$scope.gameboard.disabledSectors[3] = true;$scope.gameboard.disabledSectors[4] = true;$scope.gameboard.disabledSectors[5] = true;$scope.gameboard.disabledSectors[6] = true;$scope.gameboard.disabledSectors[7] = true;$scope.gameboard.disabledSectors[8] = true;
         $scope.gameboard.inProgress = false;
         $cookieStore.remove('inProgress');
       }
@@ -372,8 +372,8 @@ angular.module('utictactoe.controllers', [])
         $scope.setEnabled(-1);
 
         // for controlling the css of enabled and disabled sectors
-        $scope.gameboard.disabledSects = [];
-        $scope.gameboard.disabledSects[0] = 'all';$scope.gameboard.disabledSects[1] = 'all';$scope.gameboard.disabledSects[2] = 'all';$scope.gameboard.disabledSects[3] = 'all';$scope.gameboard.disabledSects[4] = 'all';$scope.gameboard.disabledSects[5] = 'all';$scope.gameboard.disabledSects[6] = 'all';$scope.gameboard.disabledSects[7] = 'all';$scope.gameboard.disabledSects[8] = 'all';
+        $scope.gameboard.disabledSectors = [];
+        $scope.gameboard.disabledSectors[0] = 'all';$scope.gameboard.disabledSectors[1] = 'all';$scope.gameboard.disabledSectors[2] = 'all';$scope.gameboard.disabledSectors[3] = 'all';$scope.gameboard.disabledSectors[4] = 'all';$scope.gameboard.disabledSectors[5] = 'all';$scope.gameboard.disabledSectors[6] = 'all';$scope.gameboard.disabledSectors[7] = 'all';$scope.gameboard.disabledSectors[8] = 'all';
 
         $scope.gameboard.result = ['','','','','','','','',''];
         $scope.gameboard.xshow = [false, false, false, false, false, false, false, false, false];
@@ -404,7 +404,6 @@ angular.module('utictactoe.controllers', [])
 
         if ($cookieStore.get('inProgress') === 'none' || typeof $cookies.inProgress === 'undefined') {
           var queue = new Firebase('https://utictactoe.firebaseio.com/queue');
-
           queue.once('value', function(data) {
             if (data.val() === null) {
               game = queue.parent().child('games').push({
@@ -416,6 +415,10 @@ angular.module('utictactoe.controllers', [])
               angularFire(ref, $scope, 'gameboard', {}).then(function() {
                 $cookieStore.put('turn', true);
                 $cookieStore.put('inProgress', game);
+                // var endGameRef = new Firebase('https://utictactoe.firebaseio.com/games/' + game + '/gameboard');
+                // endGameRef.once('child_added', function(data) {
+                //   console.log('the game is over');
+                // })
               })
             } else {
               game = data.val();
@@ -429,35 +432,14 @@ angular.module('utictactoe.controllers', [])
                 $scope.setNewBoard(game);
               })
             }
+
+            // Erase data in cookies pertaining to current game when someone resigns
+            var endGameRef = new Firebase('https://utictactoe.firebaseio.com/games/' + game + '/gameboard/winner');
+            endGameRef.on('value', function(data) {
+              console.log(data.val());
+            })
           })
         }
-
-
-
-        // ref.once('value', function(data) {
-        //   if ($cookieStore.get('inProgress') === 'none' || typeof($cookies.inProgress) === 'undefined') {
-        //     if (data.val() === null) {
-        //       var gamename = ref.parent().child('games').push({
-        //         player1: playerId
-        //       })
-        //       ref.set(gamename.name());
-        //       $cookieStore.put('turn', true);
-        //       $cookieStore.put('inProgress',gamename.name());
-        //       game = gamename.name();
-        //       $scope.startGame1(game);
-        //     } else {
-        //       game = data.val();
-
-        //       ref.remove();
-        //       ref.parent().child('games').child(game).child('player2').set(playerId);
-        //       $cookieStore.put('turn', false);
-        //       $cookieStore.put('inProgress',game);
-        //       $scope.startGame(game);
-        //     }
-        //   }
-        // });
-
-
       }
   	}])
 
