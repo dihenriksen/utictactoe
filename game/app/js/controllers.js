@@ -436,7 +436,17 @@ angular.module('utictactoe.controllers', [])
             // Erase data in cookies pertaining to current game when someone resigns
             var endGameRef = new Firebase('https://utictactoe.firebaseio.com/games/' + game + '/gameboard/winner');
             endGameRef.on('value', function(data) {
-              console.log(data.val());
+              if (data.val() === true) {
+                console.log('X wins');
+                $cookieStore.remove('inProgress');
+                $cookieStore.remove('turn');
+                endGameRef.off();
+              } else if (data.val() === false) {
+                console.log('O wins');
+                $cookieStore.remove('inProgress');
+                $cookieStore.remove('turn');
+                endGameRef.off();
+              }
             })
           })
         }
