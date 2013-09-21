@@ -437,12 +437,10 @@ angular.module('utictactoe.controllers', [])
             var endGameRef = new Firebase('https://utictactoe.firebaseio.com/games/' + game + '/gameboard/winner');
             endGameRef.on('value', function(data) {
               if (data.val() === true) {
-                console.log('X wins');
                 $cookieStore.remove('inProgress');
                 $cookieStore.remove('turn');
                 endGameRef.off();
               } else if (data.val() === false) {
-                console.log('O wins');
                 $cookieStore.remove('inProgress');
                 $cookieStore.remove('turn');
                 endGameRef.off();
