@@ -126,7 +126,10 @@ angular.module('utictactoe.controllers', [])
               $scope.gameboard.moves.push(i);
             }
 
+            // Check the sector played in for a win
             $scope.checkSector(i);
+
+            // Check the whole game for a win
             if ($scope.gameboard.moves.length >= 18) {
               $scope.checkWin();
               if ($scope.gameboard.winner === true) {
@@ -134,6 +137,7 @@ angular.module('utictactoe.controllers', [])
               } else if ($scope.gameboard.winner === false) {
                 alert('O Wins!');
               } else if ($scope.gameboard.moves.length === 81) {
+                $scope.gameboard.winner = 'tie';
                 alert('It\'s a tie!');
               }
             }
@@ -324,6 +328,23 @@ angular.module('utictactoe.controllers', [])
       }
 
 
+      $scope.endgame = function(win) {
+        console.log('inside endgame function');
+        // Remove cookies storing current game data:
+        $cookieStore.remove('inProgress');
+        $cookieStore.remove('turn');
+
+        // Alert message saying who won:
+        if (win === true) {
+          alert('X wins');
+        } else if (win === false) {
+          alert('O wins');
+        } else if (win === null) {
+          alert('It\'s a tie!');
+        }
+      }
+
+
       //reset conditions for a new game
       $scope.startGame = function(game) {
         var ref = new Firebase('https://utictactoe.firebaseio.com/games/' + game + '/gameboard')
@@ -352,8 +373,6 @@ angular.module('utictactoe.controllers', [])
 
 
       $scope.setNewBoard = function(game) {
-        console.log('here');
-
         // the 'moves' array stores which spaces have been played in
         $scope.gameboard.moves = [-1];
 
@@ -436,13 +455,15 @@ angular.module('utictactoe.controllers', [])
             // Erase data in cookies pertaining to current game when someone resigns
             var endGameRef = new Firebase('https://utictactoe.firebaseio.com/games/' + game + '/gameboard/winner');
             endGameRef.on('value', function(data) {
-              if (data.val() === true) {
-                $cookieStore.remove('inProgress');
-                $cookieStore.remove('turn');
+              console.log('inside endGameRef.on');
+              if (data.val()) {
+                $scope.endgame(true);
                 endGameRef.off();
               } else if (data.val() === false) {
-                $cookieStore.remove('inProgress');
-                $cookieStore.remove('turn');
+                $scope.endgame(false);
+                endGameRef.off();
+              } else if (data.val() === 'tie') {
+                $scope.endgame();
                 endGameRef.off();
               }
             })
