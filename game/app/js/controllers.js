@@ -130,16 +130,8 @@ angular.module('utictactoe.controllers', [])
             $scope.checkSector(i);
 
             // Check the whole game for a win
-            if ($scope.gameboard.moves.length >= 18) {
+            if ($scope.gameboard.moves.length >= 16) {
               $scope.checkWin();
-              if ($scope.gameboard.winner === true) {
-                alert('X Wins!');
-              } else if ($scope.gameboard.winner === false) {
-                alert('O Wins!');
-              } else if ($scope.gameboard.moves.length === 81) {
-                $scope.gameboard.winner = 'tie';
-                alert('It\'s a tie!');
-              }
             }
 
             $scope.gameboard.enabled = [];
@@ -317,29 +309,29 @@ angular.module('utictactoe.controllers', [])
 
 
       $scope.resign = function(game) {
-        if (($scope.gameboard.winner = !$scope.gameboard.turn) === true) {
-          alert('X Wins!');
-        } else { alert('O Wins!') }
-
-        $scope.gameboard.enabled = [-1];
-        $scope.gameboard.disabledSectors[0] = true;$scope.gameboard.disabledSectors[1] = true;$scope.gameboard.disabledSectors[2] = true;$scope.gameboard.disabledSectors[3] = true;$scope.gameboard.disabledSectors[4] = true;$scope.gameboard.disabledSectors[5] = true;$scope.gameboard.disabledSectors[6] = true;$scope.gameboard.disabledSectors[7] = true;$scope.gameboard.disabledSectors[8] = true;
-        $scope.gameboard.inProgress = false;
-        $cookieStore.remove('inProgress');
+        // The resetting of the board and cookies is done automatically through
+        // a promise that is called when the value of gameboard.winner changes.
+        $scope.gameboard.winner = !$scope.gameboard.turn;
       }
 
 
-      $scope.endgame = function(win) {
+      $scope.endgame = function(winner) {
         console.log('inside endgame function');
         // Remove cookies storing current game data:
         $cookieStore.remove('inProgress');
         $cookieStore.remove('turn');
 
+        // Reset the board
+        $scope.gameboard.enabled = [-1];
+        $scope.gameboard.disabledSectors[0] = true;$scope.gameboard.disabledSectors[1] = true;$scope.gameboard.disabledSectors[2] = true;$scope.gameboard.disabledSectors[3] = true;$scope.gameboard.disabledSectors[4] = true;$scope.gameboard.disabledSectors[5] = true;$scope.gameboard.disabledSectors[6] = true;$scope.gameboard.disabledSectors[7] = true;$scope.gameboard.disabledSectors[8] = true;
+        $scope.gameboard.inProgress = false;
+
         // Alert message saying who won:
-        if (win === true) {
+        if (winner === true) {
           alert('X wins');
-        } else if (win === false) {
+        } else if (winner === false) {
           alert('O wins');
-        } else if (win === null) {
+        } else if (winner === null) {
           alert('It\'s a tie!');
         }
       }
