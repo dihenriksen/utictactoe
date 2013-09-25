@@ -326,6 +326,9 @@ angular.module('utictactoe.controllers', [])
         $scope.gameboard.disabledSectors[0] = true;$scope.gameboard.disabledSectors[1] = true;$scope.gameboard.disabledSectors[2] = true;$scope.gameboard.disabledSectors[3] = true;$scope.gameboard.disabledSectors[4] = true;$scope.gameboard.disabledSectors[5] = true;$scope.gameboard.disabledSectors[6] = true;$scope.gameboard.disabledSectors[7] = true;$scope.gameboard.disabledSectors[8] = true;
         $scope.gameboard.inProgress = false;
 
+        $scope.hideNew = false;
+        $scope.showResign = false;
+
         // Alert message saying who won:
         if (winner === true) {
           alert('X wins');
@@ -334,33 +337,6 @@ angular.module('utictactoe.controllers', [])
         } else if (winner === null) {
           alert('It\'s a tie!');
         }
-      }
-
-
-      //reset conditions for a new game
-      $scope.startGame = function(game) {
-        var ref = new Firebase('https://utictactoe.firebaseio.com/games/' + game + '/gameboard')
-        var promise = angularFire(ref, $scope, 'gameboard', {});
-        gamescope = $scope;
-        $scope.setNewBoard(game);
-
-        promise.then(function() {
-          gamescope = $scope;
-          $scope.$watch('gameboard');
-          // $scope.setNewBoard(game);
-        })
-      }
-
-
-      $scope.startGame1 = function(game) {
-        var ref = new Firebase('https://utictactoe.firebaseio.com/games/' + game + '/gameboard')
-        var promise = angularFire(ref, $scope, 'gameboard', {});
-
-        promise.then(function(result) {
-          // console.log(ref.toString());
-          $scope.$watch('gameboard');
-          gamescope = $scope;
-        })
       }
 
 
@@ -412,7 +388,6 @@ angular.module('utictactoe.controllers', [])
       $scope.newgame = function() {
         var playerId = $cookies['playerId'];
 
-
         if ($cookieStore.get('inProgress') === 'none' || typeof $cookies.inProgress === 'undefined') {
           var queue = new Firebase('https://utictactoe.firebaseio.com/queue');
           queue.once('value', function(data) {
@@ -426,11 +401,10 @@ angular.module('utictactoe.controllers', [])
               angularFire(ref, $scope, 'gameboard', {}).then(function() {
                 $cookieStore.put('turn', true);
                 $cookieStore.put('inProgress', game);
-                // var endGameRef = new Firebase('https://utictactoe.firebaseio.com/games/' + game + '/gameboard');
-                // endGameRef.once('child_added', function(data) {
-                //   console.log('the game is over');
-                // })
               })
+              $scope.showWait = true;
+              $scope.hideNew = true;
+
             } else {
               game = data.val();
               queue.remove();
@@ -438,10 +412,14 @@ angular.module('utictactoe.controllers', [])
               $scope.gameboard = {};
               var ref = new Firebase('https://utictactoe.firebaseio.com/games/' + game + '/gameboard');
               angularFire(ref, $scope, 'gameboard', {}).then(function() {
+                $scope.showWait = false;
+                $scope.showResign = true;
+                $scope.hideNew = true;
                 $cookieStore.put('turn', false);
                 $cookieStore.put('inProgress', game);
                 $scope.setNewBoard(game);
               })
+
             }
 
             // Erase data in cookies pertaining to current game when someone resigns
