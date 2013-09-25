@@ -390,6 +390,8 @@ angular.module('utictactoe.controllers', [])
         game = null;
         $scope.hideNew = false;
         $scope.showWait = false;
+        $cookieStore.remove('inProgress');
+        $cookieStore.remove('turn');
       }
 
 
