@@ -385,6 +385,14 @@ angular.module('utictactoe.controllers', [])
       }
 
 
+      $scope.cancel = function(game) {
+        new Firebase('https://utictactoe.firebaseio.com/queue').remove();
+        game = null;
+        $scope.hideNew = false;
+        $scope.showWait = false;
+      }
+
+
       $scope.newgame = function() {
         var playerId = $cookies['playerId'];
 
