@@ -5,6 +5,11 @@
 	margin: auto;
 }
 
+#turninfo {
+	/*border: 1px solid black;*/
+	float: right;
+}
+
 h1 {
 	text-align: center;
 }
