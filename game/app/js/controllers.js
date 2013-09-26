@@ -328,6 +328,9 @@ angular.module('utictactoe.controllers', [])
 
         $scope.hideNew = false;
         $scope.showResign = false;
+        $scope.showPlayingAs = false;
+        $scope.showX = false;
+        $scope.showO = false;
 
         // Alert message saying who won:
         if (winner === true) {
@@ -441,13 +444,11 @@ angular.module('utictactoe.controllers', [])
                 $cookieStore.put('inProgress', game);
                 $scope.setNewBoard(game);
               })
-
             }
 
             // Erase data in cookies pertaining to current game when someone resigns
             var endGameRef = new Firebase('https://utictactoe.firebaseio.com/games/' + game + '/gameboard/winner');
             endGameRef.on('value', function(data) {
-              console.log('inside endGameRef.on');
               if (data.val()) {
                 $scope.endgame(true);
                 endGameRef.off();

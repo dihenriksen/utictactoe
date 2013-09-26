@@ -152,7 +152,12 @@
     <button class='btn btn-danger' data-ng-show='showWait' data-ng-click='cancel(game)'>Cancel Game</button>
     <!-- <button class='btn btn-info' data-ng-hide='gameboard.inProgress' data-ng-click='challengeFriend()'>Play a Friend</button> -->
     <a href="#/rules"><button class='btn btn-info' data-ng-click='rules()'>Rules</button></a>
-    <span data-ng-show='showPlayingAs'>Playing as: </span><span data-ng-show='showX'>X</span><span data-ng-show='showO'>O</span>
+
+    <div id='turninfo'>
+      <span data-ng-show='showPlayingAs'>Playing as: </span><span data-ng-show='showX'>X</span><span data-ng-show='showO'>O</span><br>
+      <!-- <span data-ng-show='showMyTurn'>Your Turn</span><span data-ng-show='showTheirTurn'>Opponent's Turn</span> -->
+    </div>
+
     <button data-ng-click='clearcookie()'>Clear Cookies</button>
     <button data-ng-click='showcookie()'>Show Cookies</button>
     <div id='turnInfo'>
