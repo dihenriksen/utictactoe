@@ -416,10 +416,13 @@ angular.module('utictactoe.controllers', [])
                 $cookieStore.put('inProgress', game);
               })
 
+              // Adjust buttons that the player sees when a second player joins the game
               ref.once('child_added', function() {
                 $scope.showWait = false;
                 $scope.hideNew = true;
                 $scope.showResign = true;
+                $scope.showPlayingAs = true;
+                $scope.showX = true;
               })
 
             } else {
@@ -432,6 +435,8 @@ angular.module('utictactoe.controllers', [])
                 $scope.showWait = false;
                 $scope.showResign = true;
                 $scope.hideNew = true;
+                $scope.showPlayingAs = true;
+                $scope.showO = true;
                 $cookieStore.put('turn', false);
                 $cookieStore.put('inProgress', game);
                 $scope.setNewBoard(game);
