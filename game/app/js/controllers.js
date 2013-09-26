@@ -53,6 +53,7 @@ angular.module('utictactoe.controllers', [])
 
         promise.then(function() {
           $scope.$watch('gameboard');
+          console.log($scope.gameboard);
           gamescope = $scope;
           if (gamescope.gameboard.inProgress === false) {
             alert('You won');
