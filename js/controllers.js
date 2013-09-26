@@ -406,14 +406,21 @@ angular.module('utictactoe.controllers', [])
                 player1: playerId
               }).name();
               queue.set(game);
+              $scope.showWait = true;
+              $scope.hideNew = true;
               $scope.gameboard = {};
+
               var ref = new Firebase('https://utictactoe.firebaseio.com/games/' + game + '/gameboard');
               angularFire(ref, $scope, 'gameboard', {}).then(function() {
                 $cookieStore.put('turn', true);
                 $cookieStore.put('inProgress', game);
               })
-              $scope.showWait = true;
-              $scope.hideNew = true;
+
+              ref.once('child_added', function() {
+                $scope.showWait = false;
+                $scope.hideNew = true;
+                $scope.showResign = true;
+              })
 
             } else {
               game = data.val();
